@@ -1,101 +1,35 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
+import { fetchProducts, updateCountdown } from '../redux/slices/productSlice'
+import { addToCart } from '../redux/slices/cartSlice'
+import { addToWishlist } from '../redux/slices/wishlistSlice'
 
 const FlashSales = () => {
-  // State for products
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  // State for countdown timer
-  const [timeLeft, setTimeLeft] = useState({
-    days: 3,
-    hours: 23,
-    minutes: 19,
-    seconds: 56
-  })
+  const dispatch = useAppDispatch()
+  const { flashSaleItems, loading, error, timeLeft } = useAppSelector(
+    state => state.products
+  )
 
   // Fetch products from API
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true)
-        const response = await fetch('https://fakestoreapi.com/products')
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch products')
-        }
-
-        const data = await response.json()
-
-        // Add random discount to each product
-        const productsWithDiscount = data.slice(0, 20).map(product => {
-          const discountPercentage = Math.floor(Math.random() * 20) + 20 // Random discount between 20-40%
-          const originalPrice = Math.round(product.price)
-          const discountedPrice = Math.round(
-            (originalPrice * (100 - discountPercentage)) / 100
-          )
-
-          return {
-            ...product,
-            originalPrice: originalPrice,
-            currentPrice: discountedPrice,
-            discount: discountPercentage,
-            reviews: Math.floor(Math.random() * 50) + 50 // Random reviews between 50-100
-          }
-        })
-
-        setProducts(productsWithDiscount)
-        setLoading(false)
-      } catch (err) {
-        setError(err.message)
-        setLoading(false)
-      }
-    }
-
-    fetchProducts()
-  }, [])
+    dispatch(fetchProducts())
+  }, [dispatch])
 
   // Update countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(prevTime => {
-        let { days, hours, minutes, seconds } = prevTime
-
-        if (seconds > 0) {
-          seconds -= 1
-        } else {
-          seconds = 59
-          if (minutes > 0) {
-            minutes -= 1
-          } else {
-            minutes = 59
-            if (hours > 0) {
-              hours -= 1
-            } else {
-              hours = 23
-              if (days > 0) {
-                days -= 1
-              } else {
-                // Timer ended
-                clearInterval(timer)
-              }
-            }
-          }
-        }
-
-        return { days, hours, minutes, seconds }
-      })
+      dispatch(updateCountdown())
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [dispatch])
 
   // Format time with leading zeros
   const formatTime = time => {
@@ -104,6 +38,38 @@ const FlashSales = () => {
 
   // Swiper reference
   const swiperRef = useRef(null)
+
+  // Handle add to cart
+  const handleAddToCart = product => {
+    dispatch(addToCart(product))
+  }
+
+  // Handle add to wishlist
+  const handleAddToWishlist = product => {
+    dispatch(addToWishlist(product))
+  }
+
+  if (loading) {
+    return (
+      <div className='container mx-auto px-4 py-8 flex justify-center items-center h-64'>
+        <div className='text-center'>
+          <div className='inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-500 mb-4'></div>
+          <p>Loading products...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className='container mx-auto px-4 py-8'>
+        <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded'>
+          <p>Error: {error}</p>
+          <p>Please try again later.</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className='container mx-auto px-4 py-8 '>
@@ -154,8 +120,7 @@ const FlashSales = () => {
             </div>
           </div>
 
-          {/* Countdown timer */}
-
+          {/* Navigation arrows */}
           <div className='hidden md:flex items-center space-x-2 ml-4 mt-7'>
             <button
               onClick={() => swiperRef.current.swiper.slidePrev()}
@@ -196,8 +161,6 @@ const FlashSales = () => {
               </svg>
             </button>
           </div>
-
-          {/* Navigation arrows */}
         </div>
 
         {/* Products grid with Swiper */}
@@ -215,7 +178,7 @@ const FlashSales = () => {
             }}
             className='mySwiper'
           >
-            {products.map(product => (
+            {flashSaleItems.map(product => (
               <SwiperSlide key={product.id}>
                 <div className='group relative border rounded-sm overflow-hidden'>
                   <div className='relative group/card'>
@@ -232,10 +195,10 @@ const FlashSales = () => {
 
                     {/* Icons */}
                     <div className='absolute top-2 right-2 flex flex-col gap-2'>
-                      <Link
-                        to={`/product/${product.id}`}
-                        className='bg-white p-2 rounded-full shadow hover:bg-gray-100'
-                      >
+                      <Link to={`/product/${product.id}`}
+                        onClick={() => handleAddToWishlist(product)}
+                        className="bg-white p-2 rounded-full shadow
+                        hover:bg-gray-100" >
                         <svg
                           width='24'
                           height='24'
@@ -282,7 +245,10 @@ const FlashSales = () => {
                     </div>
 
                     {/* Add to Cart: only appears on hover */}
-                    <button className='absolute inset-x-0 bottom-0 bg-black text-white py-2 text-sm opacity-0 group-hover/card:opacity-100 transition-opacity duration-300'>
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className='absolute inset-x-0 bottom-0 bg-black text-white py-2 text-sm opacity-0 group-hover/card:opacity-100 transition-opacity duration-300'
+                    >
                       Add To Cart
                     </button>
                   </div>
@@ -313,8 +279,6 @@ const FlashSales = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-
-          {/* Custom navigation buttons */}
         </div>
 
         {/* View all products button */}

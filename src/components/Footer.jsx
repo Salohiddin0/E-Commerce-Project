@@ -48,7 +48,7 @@ const Footer = () => {
                 <p className='mb-2'>111 Bijoy sarani, Dhaka,</p>
                 <p className='mb-2'>DH 1515, Bangladesh</p>
                 <p className='mb-2'>exclusive@gmail.com</p>
-                <p className='mb-2'>+88015-88888-9999</p>
+                <p className='mb-2'>+998-90-302-96-83</p>
               </div>
 
               {/* Account Column */}

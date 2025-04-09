@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp'
 import Navbar from './components/Navbar'
 import CategoryAll from './pages/CategoryAll'
 
+
 function App () {
   return (
     <Router>
