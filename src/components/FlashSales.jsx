@@ -1,7 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 const FlashSales = () => {
   // State for products
@@ -31,7 +35,7 @@ const FlashSales = () => {
         const data = await response.json()
 
         // Add random discount to each product
-        const productsWithDiscount = data.slice(0, 5).map(product => {
+        const productsWithDiscount = data.slice(0, 20).map(product => {
           const discountPercentage = Math.floor(Math.random() * 20) + 20 // Random discount between 20-40%
           const originalPrice = Math.round(product.price)
           const discountedPrice = Math.round(
@@ -98,33 +102,14 @@ const FlashSales = () => {
     return time < 10 ? `0${time}` : time
   }
 
-  if (loading) {
-    return (
-      <div className='container mx-auto px-4 py-8 flex justify-center items-center h-64'>
-        <div className='text-center'>
-          <div className='inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-500 mb-4'></div>
-          <p>Loading products...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className='container mx-auto px-4 py-8'>
-        <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded'>
-          <p>Error: {error}</p>
-          <p>Please try again later.</p>
-        </div>
-      </div>
-    )
-  }
+  // Swiper reference
+  const swiperRef = useRef(null)
 
   return (
     <div className='container mx-auto px-4 py-8 '>
       <div className='max-w-7xl mx-auto'>
         {/* Header section */}
-        <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-8'>
+        <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-[40px] mt-[110px]'>
           <div className='flex flex-col'>
             {/* Today's label */}
             <div className='relative mb-4'>
@@ -134,44 +119,48 @@ const FlashSales = () => {
                 </Link>
               </div>
             </div>
+            <div className='flex items-center gap-[110px]'>
+              <h2 className='text-3xl font-bold mb-4'>Flash Sales</h2>
 
-            <h2 className='text-3xl font-bold mb-4'>Flash Sales</h2>
+              <div className='flex mt-4 md:mt-0'>
+                <div className='flex flex-col items-center mr-4'>
+                  <span className='text-2xl font-bold'>
+                    {formatTime(timeLeft.days)}
+                  </span>
+                  <span className='text-xs text-gray-500'>Days</span>
+                </div>
+                <span className='text-2xl font-bold mx-1'>:</span>
+                <div className='flex flex-col items-center mr-4'>
+                  <span className='text-2xl font-bold'>
+                    {formatTime(timeLeft.hours)}
+                  </span>
+                  <span className='text-xs text-gray-500'>Hours</span>
+                </div>
+                <span className='text-2xl font-bold mx-1'>:</span>
+                <div className='flex flex-col items-center mr-4'>
+                  <span className='text-2xl font-bold'>
+                    {formatTime(timeLeft.minutes)}
+                  </span>
+                  <span className='text-xs text-gray-500'>Minutes</span>
+                </div>
+                <span className='text-2xl font-bold mx-1'>:</span>
+                <div className='flex flex-col items-center'>
+                  <span className='text-2xl font-bold'>
+                    {formatTime(timeLeft.seconds)}
+                  </span>
+                  <span className='text-xs text-gray-500'>Seconds</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Countdown timer */}
-          <div className='flex mt-4 md:mt-0'>
-            <div className='flex flex-col items-center mr-4'>
-              <span className='text-2xl font-bold'>
-                {formatTime(timeLeft.days)}
-              </span>
-              <span className='text-xs text-gray-500'>Days</span>
-            </div>
-            <span className='text-2xl font-bold mx-1'>:</span>
-            <div className='flex flex-col items-center mr-4'>
-              <span className='text-2xl font-bold'>
-                {formatTime(timeLeft.hours)}
-              </span>
-              <span className='text-xs text-gray-500'>Hours</span>
-            </div>
-            <span className='text-2xl font-bold mx-1'>:</span>
-            <div className='flex flex-col items-center mr-4'>
-              <span className='text-2xl font-bold'>
-                {formatTime(timeLeft.minutes)}
-              </span>
-              <span className='text-xs text-gray-500'>Minutes</span>
-            </div>
-            <span className='text-2xl font-bold mx-1'>:</span>
-            <div className='flex flex-col items-center'>
-              <span className='text-2xl font-bold'>
-                {formatTime(timeLeft.seconds)}
-              </span>
-              <span className='text-xs text-gray-500'>Seconds</span>
-            </div>
-          </div>
 
-          {/* Navigation arrows */}
-          <div className='hidden md:flex items-center space-x-2 ml-4'>
-            <button className='w-10 h-10 rounded-full border bg-gray-50 flex items-center justify-center hover:bg-gray-100'>
+          <div className='hidden md:flex items-center space-x-2 ml-4 mt-7'>
+            <button
+              onClick={() => swiperRef.current.swiper.slidePrev()}
+              className='w-12 h-12 rounded-full border bg-gray-50 flex items-center justify-center hover:bg-gray-100'
+            >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='h-5 w-5'
@@ -187,7 +176,10 @@ const FlashSales = () => {
                 />
               </svg>
             </button>
-            <button className='w-10 h-10 rounded-full border bg-gray-50 flex items-center justify-center hover:bg-gray-100'>
+            <button
+              onClick={() => swiperRef.current.swiper.slideNext()}
+              className='w-12 h-12 rounded-full border bg-gray-50 flex items-center justify-center hover:bg-gray-100'
+            >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='h-5 w-5'
@@ -204,122 +196,125 @@ const FlashSales = () => {
               </svg>
             </button>
           </div>
+
+          {/* Navigation arrows */}
         </div>
 
-        {/* Products grid */}
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
-          {products.map((product, index) => (
-            <div
-              key={product.id}
-              className='bg-gray-50 rounded-lg relative group overflow-hidden'
-            >
-              {/* Discount badge */}
-              <div className='absolute top-4 left-4 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-sm z-10'>
-                -{product.discount}%
-              </div>
+        {/* Products grid with Swiper */}
+        <div className='relative'>
+          <Swiper
+            ref={swiperRef}
+            modules={[Navigation]}
+            spaceBetween={20}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 4 },
+              1280: { slidesPerView: 5 }
+            }}
+            className='mySwiper'
+          >
+            {products.map(product => (
+              <SwiperSlide key={product.id}>
+                <div className='group relative border rounded-sm overflow-hidden'>
+                  <div className='relative group/card'>
+                    <img
+                      src={product.image || '/placeholder.svg'}
+                      alt={product.title}
+                      className='w-full h-48 object-contain bg-[#f5f5f5] p-4'
+                    />
 
-              {/* Product image container */}
-              <div className='relative h-48 flex justify-center p-4'>
-                {/* Wishlist and quick view buttons */}
-                <div className='absolute top-4 right-4 flex flex-col space-y-2 z-20'>
-                  {/* Heart icon */}
-                  <Link
-                    to={`/product/${product.id}`}
-                    className='bg-[#ffffff] rounded-full p-[5px]'
-                  >
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='h-6 w-6'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke='currentColor'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={1.5}
-                        d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
-                      />
-                    </svg>
-                  </Link>
+                    {/* Discount */}
+                    <span className='absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded'>
+                      -{product.discount}%
+                    </span>
 
-                  {/* Eye icon */}
-                  <Link
-                    to={`/product/${product.id}`}
-                    className='bg-[#ffffff] rounded-full p-[5px]'
-                  >
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='h-6 w-6'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke='currentColor'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={1.5}
-                        d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-                      />
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={1.5}
-                        d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-                      />
-                    </svg>
-                  </Link>
-                </div>
-
-                {/* Product image */}
-                <img
-                  src={product.image || '/placeholder.svg'}
-                  alt={product.title}
-                  className='h-full object-contain z-0'
-                />
-
-                {/* Add to cart button (hoverda chiqadi) */}
-                <button
-                  className='absolute bottom-0 left-0 w-full bg-black text-white py-3 font-medium 
-                  opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 rounded-md'
-                >
-                  Add To Cart
-                </button>
-              </div>
-
-              {/* Product details */}
-              <div className='p-4 bg-[#ffffff]'>
-                <h3 className='font-medium text-base mb-1'>
-                  {product.title.length > 20
-                    ? product.title.substring(0, 20) + '...'
-                    : product.title}
-                </h3>
-                <div className='text-red-500 font-semibold'>
-                  ${product.currentPrice}
-                </div>
-
-                {/* Rating */}
-                <div className='flex items-center mt-1'>
-                  <div className='flex'>
-                    {[1, 2, 3, 4, 5].map(star => (
-                      <svg
-                        key={star}
-                        className='w-4 h-4 text-yellow-400'
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 20 20'
-                        fill='currentColor'
+                    {/* Icons */}
+                    <div className='absolute top-2 right-2 flex flex-col gap-2'>
+                      <Link
+                        to={`/product/${product.id}`}
+                        className='bg-white p-2 rounded-full shadow hover:bg-gray-100'
                       >
-                        <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-                      </svg>
-                    ))}
+                        <svg
+                          width='24'
+                          height='24'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            d='M8 5C5.7912 5 4 6.73964 4 8.88594C4 10.6185 4.7 14.7305 11.5904 18.8873C11.7138 18.961 11.8555 19 12 19C12.1445 19 12.2862 18.961 12.4096 18.8873C19.3 14.7305 20 10.6185 20 8.88594C20 6.73964 18.2088 5 16 5C13.7912 5 12 7.35511 12 7.35511C12 7.35511 10.2088 5 8 5Z'
+                            stroke='black'
+                            strokeWidth='1.5'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          />
+                        </svg>
+                      </Link>
+                      <Link
+                        to={`/product/${product.id}`}
+                        className='bg-white p-2 rounded-full shadow hover:bg-gray-100'
+                      >
+                        <svg
+                          width='24'
+                          height='24'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            d='M21.257 10.962C21.731 11.582 21.731 12.419 21.257 13.038C19.764 14.987 16.182 19 12 19C7.81801 19 4.23601 14.987 2.74301 13.038C2.51239 12.7411 2.38721 12.3759 2.38721 12C2.38721 11.6241 2.51239 11.2589 2.74301 10.962C4.23601 9.013 7.81801 5 12 5C16.182 5 19.764 9.013 21.257 10.962V10.962Z'
+                            stroke='black'
+                            strokeWidth='1.5'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          />
+                          <path
+                            d='M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z'
+                            stroke='black'
+                            strokeWidth='1.5'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+
+                    {/* Add to Cart: only appears on hover */}
+                    <button className='absolute inset-x-0 bottom-0 bg-black text-white py-2 text-sm opacity-0 group-hover/card:opacity-100 transition-opacity duration-300'>
+                      Add To Cart
+                    </button>
                   </div>
-                  <span className='text-gray-500 text-xs ml-1'>
-                    ({product.reviews})
-                  </span>
+
+                  {/* Product Info */}
+                  <div className='bg-white p-4'>
+                    <h3 className='text-sm font-semibold mb-2'>
+                      {product.title}
+                    </h3>
+                    <div className='flex items-center gap-2 text-sm'>
+                      <span className='text-red-500 font-semibold'>
+                        ${product.currentPrice}
+                      </span>
+                      <span className='line-through text-gray-400'>
+                        ${product.originalPrice}
+                      </span>
+                    </div>
+                    <div className='flex items-center gap-1 mt-1 text-yellow-500'>
+                      {[...Array(5)].map((_, index) => (
+                        <span key={index}>⭐</span>
+                      ))}
+                      <span className='text-gray-500 text-xs ml-1'>
+                        ({product.reviews})
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          {/* Custom navigation buttons */}
         </div>
 
         {/* View all products button */}
