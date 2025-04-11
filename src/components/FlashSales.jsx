@@ -75,7 +75,7 @@ const FlashSales = () => {
     <div className='container mx-auto px-4 py-8 '>
       <div className='max-w-7xl mx-auto'>
         {/* Header section */}
-        <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-[40px] mt-[110px]'>
+        <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-[40px] mt-[35px] md:mt-[90px]'>
           <div className='flex flex-col'>
             {/* Today's label */}
             <div className='relative mb-4'>
@@ -85,33 +85,36 @@ const FlashSales = () => {
                 </Link>
               </div>
             </div>
-            <div className='flex items-center gap-[110px]'>
-              <h2 className='text-3xl font-bold mb-4'>Flash Sales</h2>
+            <div className='flex flex-col md:flex-row items-center gap-4 md:gap-[110px]'>
+              <h2 className='text-3xl font-bold mb-2 md:mb-4'>Flash Sales</h2>
 
-              <div className='flex mt-4 md:mt-0'>
-                <div className='flex flex-col items-center mr-4'>
-                  <span className='text-2xl font-bold'>
+              <div className='flex mt-2 md:mt-0'>
+                <div className='flex flex-col items-center mr-2 md:mr-4'>
+                  <span className='text-xl md:text-2xl font-bold'>
                     {formatTime(timeLeft.days)}
                   </span>
                   <span className='text-xs text-gray-500'>Days</span>
                 </div>
-                <span className='text-2xl font-bold mx-1'>:</span>
-                <div className='flex flex-col items-center mr-4'>
-                  <span className='text-2xl font-bold'>
+                <span className='text-xl md:text-2xl font-bold mx-1'>:</span>
+
+                <div className='flex flex-col items-center mr-2 md:mr-4'>
+                  <span className='text-xl md:text-2xl font-bold'>
                     {formatTime(timeLeft.hours)}
                   </span>
                   <span className='text-xs text-gray-500'>Hours</span>
                 </div>
-                <span className='text-2xl font-bold mx-1'>:</span>
-                <div className='flex flex-col items-center mr-4'>
-                  <span className='text-2xl font-bold'>
+                <span className='text-xl md:text-2xl font-bold mx-1'>:</span>
+
+                <div className='flex flex-col items-center mr-2 md:mr-4'>
+                  <span className='text-xl md:text-2xl font-bold'>
                     {formatTime(timeLeft.minutes)}
                   </span>
                   <span className='text-xs text-gray-500'>Minutes</span>
                 </div>
-                <span className='text-2xl font-bold mx-1'>:</span>
+                <span className='text-xl md:text-2xl font-bold mx-1'>:</span>
+
                 <div className='flex flex-col items-center'>
-                  <span className='text-2xl font-bold'>
+                  <span className='text-xl md:text-2xl font-bold'>
                     {formatTime(timeLeft.seconds)}
                   </span>
                   <span className='text-xs text-gray-500'>Seconds</span>
@@ -195,10 +198,12 @@ const FlashSales = () => {
 
                     {/* Icons */}
                     <div className='absolute top-2 right-2 flex flex-col gap-2'>
-                      <Link to={`/product/${product.id}`}
+                      <Link
+                        to={`/product/${product.id}`}
                         onClick={() => handleAddToWishlist(product)}
-                        className="bg-white p-2 rounded-full shadow
-                        hover:bg-gray-100" >
+                        className='bg-white p-2 rounded-full shadow
+                        hover:bg-gray-100'
+                      >
                         <svg
                           width='24'
                           height='24'

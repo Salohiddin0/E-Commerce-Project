@@ -347,7 +347,7 @@ export default function Home () {
           </div>
 
           <div className='flex-1 relative'>
-            <div className='relative bg-black text-white m-[45px]'>
+            <div className='relative bg-black text-white m-6 lg:m-[45px]'>
               {/* responsive flex */}
               <div className='flex flex-col lg:flex-row justify-between'>
                 {/* Text block */}
