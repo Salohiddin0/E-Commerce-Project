@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import FlashSales from '../components/FlashSales'
 
 //  assets
-
 import Apple14 from '../assets/hero_endframe__cvklg0xk3w6e_large 2.png'
 import AppleLogo from '../assets/1200px-Apple_gray_logo 1.png'
 import Footer from '../components/Footer'
@@ -12,6 +13,10 @@ import Category from './Category'
 
 export default function Home () {
   const [activeSlide, setActiveSlide] = useState(0)
+  const [open, setOpen] = useState(false)
+  const mobileMenuRef = useRef(null)
+  const navLinksRef = useRef(null)
+  const categoriesRef = useRef(null)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,6 +24,45 @@ export default function Home () {
     }, 5000)
     return () => clearInterval(interval)
   })
+
+  // Handle animation when menu opens/closes
+  useEffect(() => {
+    const mobileMenu = mobileMenuRef.current
+    const navLinks = navLinksRef.current
+    const categories = categoriesRef.current
+
+    if (mobileMenu && navLinks && categories) {
+      if (open) {
+        mobileMenu.style.maxHeight = '1000px' // Large enough to fit content
+        mobileMenu.style.opacity = '1'
+        mobileMenu.style.visibility = 'visible'
+
+        // Stagger the animations
+        setTimeout(() => {
+          navLinks.style.opacity = '1'
+          navLinks.style.transform = 'translateY(0)'
+        }, 200)
+
+        setTimeout(() => {
+          categories.style.opacity = '1'
+          categories.style.transform = 'translateY(0)'
+        }, 300)
+      } else {
+        categories.style.opacity = '0'
+        categories.style.transform = 'translateY(10px)'
+
+        navLinks.style.opacity = '0'
+        navLinks.style.transform = 'translateY(10px)'
+
+        // Delay the container collapse
+        setTimeout(() => {
+          mobileMenu.style.maxHeight = '0'
+          mobileMenu.style.opacity = '0'
+          mobileMenu.style.visibility = 'hidden'
+        }, 200)
+      }
+    }
+  }, [open])
 
   const categories = [
     { name: "Woman's Fashion", hasSubmenu: true },
@@ -37,11 +81,32 @@ export default function Home () {
   }
 
   return (
-    <div>
+    <div className='relative'>
       <Navbar />
       <div className='max-w-screen-xl mx-auto'>
-        <header className='flex items-center justify-between border-b py-4 px-6'>
-          <h1 className='text-2xl font-bold'>Exclusive</h1>
+        <header className='flex items-center justify-between border-b py-4 px-6 relative z-20'>
+          <h1 className='hidden md:block text-2xl font-bold'>Exclusive</h1>
+
+          <div
+            onClick={() => setOpen(!open)}
+            className='w-8 h-6 flex flex-col justify-between items-center cursor-pointer group md:hidden'
+          >
+            <span
+              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
+                open ? 'rotate-45 translate-y-2.5' : ''
+              }`}
+            />
+            <span
+              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
+                open ? 'opacity-0' : ''
+              }`}
+            />
+            <span
+              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
+                open ? '-rotate-45 -translate-y-2.5' : ''
+              }`}
+            />
+          </div>
 
           <nav className='hidden md:flex space-x-8'>
             <Link
@@ -88,13 +153,13 @@ export default function Home () {
                   <path
                     d='M17 17L13.2223 13.2156M15.3158 8.15789C15.3158 10.0563 14.5617 11.8769 13.2193 13.2193C11.8769 14.5617 10.0563 15.3158 8.15789 15.3158C6.2595 15.3158 4.43886 14.5617 3.0965 13.2193C1.75413 11.8769 1 10.0563 1 8.15789C1 6.2595 1.75413 4.43886 3.0965 3.0965C4.43886 1.75413 6.2595 1 8.15789 1C10.0563 1 11.8769 1.75413 13.2193 3.0965C14.5617 4.43886 15.3158 6.2595 15.3158 8.15789V8.15789Z'
                     stroke='black'
-                    stroke-width='1.5'
-                    stroke-linecap='round'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
                   />
                 </svg>
               </span>
             </div>
-            <button className='p-2'>
+            <button className=''>
               <Link to={'/like'} style={{ fontSize: '20px' }}>
                 <svg
                   width='22'
@@ -106,14 +171,14 @@ export default function Home () {
                   <path
                     d='M6 1C3.239 1 1 3.216 1 5.95C1 8.157 1.875 13.395 10.488 18.69C10.6423 18.7839 10.8194 18.8335 11 18.8335C11.1806 18.8335 11.3577 18.7839 11.512 18.69C20.125 13.395 21 8.157 21 5.95C21 3.216 18.761 1 16 1C13.239 1 11 4 11 4C11 4 8.761 1 6 1Z'
                     stroke='black'
-                    stroke-width='1.5'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   />
                 </svg>
               </Link>
             </button>
-            <button className='p-2'>
+            <button className=''>
               <Link to={'/cart'} style={{ fontSize: '20px' }}>
                 <svg
                   width='32'
@@ -125,40 +190,132 @@ export default function Home () {
                   <path
                     d='M11 27C11.5523 27 12 26.5523 12 26C12 25.4477 11.5523 25 11 25C10.4477 25 10 25.4477 10 26C10 26.5523 10.4477 27 11 27Z'
                     stroke='black'
-                    stroke-width='1.5'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   />
                   <path
                     d='M25 27C25.5523 27 26 26.5523 26 26C26 25.4477 25.5523 25 25 25C24.4477 25 24 25.4477 24 26C24 26.5523 24.4477 27 25 27Z'
                     stroke='black'
-                    stroke-width='1.5'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   />
                   <path
                     d='M3 5H7L10 22H26'
                     stroke='black'
-                    stroke-width='1.5'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   />
                   <path
                     d='M10 16.6667H25.59C25.7056 16.6667 25.8177 16.6267 25.9072 16.5535C25.9966 16.4802 26.0579 16.3782 26.0806 16.2648L27.8806 7.26479C27.8951 7.19222 27.8934 7.11733 27.8755 7.04552C27.8575 6.97371 27.8239 6.90678 27.7769 6.84956C27.73 6.79234 27.6709 6.74625 27.604 6.71462C27.5371 6.68299 27.464 6.66661 27.39 6.66666H8'
                     stroke='black'
-                    stroke-width='1.5'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   />
                 </svg>
               </Link>
             </button>
           </div>
         </header>
-        {/* Main Content */}
-        <div className='flex flex-col md:flex-row'>
-          {/* Sidebar Categories */}
-          <div className='w-full md:w-64 border-r'>
+
+        {/* Mobile Menu with Absolute Positioning */}
+        <div
+          ref={mobileMenuRef}
+          className='absolute left-0 right-0 bg-white z-10 md:hidden overflow-hidden transition-all duration-500 shadow-md'
+          style={{
+            maxHeight: '0',
+            opacity: '0',
+            visibility: 'hidden',
+            top: '72px' // Adjust based on your header height
+          }}
+        >
+          {/* Mobile Navigation Links */}
+          <nav
+            ref={navLinksRef}
+            className='flex justify-around pt-20 transition-all duration-300'
+            style={{
+              opacity: '0',
+              transform: 'translateY(10px)'
+            }}
+          >
+            <Link
+              to='/'
+              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
+            >
+              Home
+            </Link>
+            <Link
+              to='/contact'
+              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
+            >
+              Contact
+            </Link>
+            <Link
+              to='/about'
+              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
+            >
+              About
+            </Link>
+            <Link
+              to='/signup'
+              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
+            >
+              Sign Up
+            </Link>
+          </nav>
+
+          {/* Mobile Categories */}
+          <div
+            ref={categoriesRef}
+            className='w-full transition-all duration-300'
+            style={{
+              opacity: '0',
+              transform: 'translateY(10px)'
+            }}
+          >
+            <ul className='py-4'>
+              {categories.map((category, index) => (
+                <li
+                  key={index}
+                  className='px-6 py-2.5 hover:bg-gray-100 transition-all duration-300'
+                  style={{
+                    transitionDelay: `${index * 50}ms`
+                  }}
+                >
+                  <Link
+                    to={category.path}
+                    className='flex items-center justify-between'
+                  >
+                    <span>{category.name}</span>
+                    {category.hasSubmenu && (
+                      <span>
+                        <svg
+                          width='8'
+                          height='13'
+                          viewBox='0 0 8 13'
+                          fill='none'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            d='M4.95 6.63597L0 1.68597L1.414 0.271973L7.778 6.63597L1.414 13L0 11.586L4.95 6.63597Z'
+                            fill='black'
+                          />
+                        </svg>
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className='flex flex-col md:flex-row relative z-0'>
+          {/* Sidebar Categories - Only visible on desktop */}
+          <div className='hidden md:block md:w-64 border-r'>
             <ul className='py-4'>
               {categories.map((category, index) => (
                 <li key={index} className='px-6 py-2.5 hover:bg-gray-100'>
@@ -191,20 +348,23 @@ export default function Home () {
 
           <div className='flex-1 relative'>
             <div className='relative bg-black text-white m-[45px]'>
-              <div className='flex justify-between'>
+              {/* responsive flex */}
+              <div className='flex flex-col lg:flex-row justify-between'>
+                {/* Text block */}
                 <div className='p-12 md:p-16 max-w-md'>
                   <div className='flex items-center mb-[20px]'>
                     <div className='mr-[24px]'>
-                      <img src={AppleLogo} alt='' />
+                      <img
+                        src={AppleLogo || '/placeholder.svg'}
+                        alt='Apple Logo'
+                      />
                     </div>
-
                     <span>iPhone 14 Series</span>
                   </div>
                   <p className='text-4xl md:text-5xl font-Inter font-semibold leading-tight md:leading-snug'>
                     <span>Up to 10%</span> <br />
                     off Voucher
                   </p>
-
                   <div className='flex items-center mt-4'>
                     <button className='inline-flex items-center border-b-2 border-white pb-1 font-medium text-white hover:opacity-80 transition duration-200'>
                       Shop Now
@@ -230,10 +390,15 @@ export default function Home () {
                 </div>
 
                 {/* iPhone Image */}
-                <div className='flex'>
-                  <img src={Apple14} alt='' />
+                <div className='flex justify-center items-center mt-6 md:mt-0'>
+                  <img
+                    src={Apple14 || '/placeholder.svg'}
+                    alt='iPhone 14'
+                    className='w-full max-w-xs md:max-w-none'
+                  />
                 </div>
               </div>
+
               {/* Pagination Dots */}
               <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2'>
                 {[0, 1, 2, 3, 4].map(index => (
