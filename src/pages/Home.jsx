@@ -3,13 +3,13 @@
 import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import FlashSales from '../components/FlashSales'
+import FlashSales from '../components/FlashSale/FlashSales'
 
 //  assets
 import Apple14 from '../assets/hero_endframe__cvklg0xk3w6e_large 2.png'
 import AppleLogo from '../assets/1200px-Apple_gray_logo 1.png'
 import Footer from '../components/Footer'
-import Category from './Category'
+import Category from '../pages/home/Category'
 
 export default function Home () {
   const [activeSlide, setActiveSlide] = useState(0)

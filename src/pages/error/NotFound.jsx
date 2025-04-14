@@ -1,39 +1,19 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
+import Navbar from '../../components/Navbar'
 import { Link } from 'react-router-dom'
+import Footer from '../../components/Footer'
 
-const Contact = () => {
+const NotFound = () => {
   return (
     <div>
       <Navbar />
       <div className='max-w-screen-xl mx-auto'>
-        <header className='flex items-center justify-between border-b py-4 px-6 relative z-20'>
+        <header className='flex items-center justify-around md:justify-between w-full border-b py-4 px-6 relative z-20'>
           <Link to={'/'} className='hidden md:block text-2xl font-bold'>
             Exclusive
           </Link>
 
-          <div
-            onClick={() => setOpen(!open)}
-            className='w-8 h-6 flex flex-col justify-between items-center cursor-pointer group md:hidden'
-          >
-            <span
-              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
-                open ? 'rotate-45 translate-y-2.5' : ''
-              }`}
-            />
-            <span
-              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
-                open ? 'opacity-0' : ''
-              }`}
-            />
-            <span
-              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
-                open ? '-rotate-45 -translate-y-2.5' : ''
-              }`}
-            />
-          </div>
-
-          <nav className='hidden md:flex space-x-8'>
+          <nav className='hidden md:flex space-x-4 lg:space-x-9'>
             <Link
               to='/'
               className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
@@ -60,7 +40,7 @@ const Contact = () => {
             </Link>
           </nav>
 
-          <div className='flex items-center space-x-4'>
+          <div className='flex gap-5  items-center'>
             <div className='relative'>
               <input
                 type='text'
@@ -143,53 +123,68 @@ const Contact = () => {
                 </svg>
               </Link>
             </button>
-          </div>
-        </header>
-        <div className='flex gap-2 pt-[80px] mb-6 text-sm'>
-          <Link to='/' className='text-gray-500 hover:underline'>
-            Home
-          </Link>
-          <span className='text-gray-500'>/</span>
-          <p>Contact</p>
-        </div>
-
-        {/* Content */}
-
-        <div className='bg-white w-[340px] h-[457px] shadow-xl'>
-          <div className='pt-[40px] pb-[51px] px-[35px]'>
-            <div className='flex gap-5 items-center'>
-              <div className='bg-red-600 text-white py-3 px-3 mb-5 rounded-full inline-block'>
+            <button>
+              <Link to={'/sign-in'}>
                 <svg
-                  width='22'
-                  height='22'
-                  viewBox='0 0 22 22'
+                  width='32'
+                  height='32'
+                  viewBox='0 0 32 32'
                   fill='none'
                   xmlns='http://www.w3.org/2000/svg'
                 >
                   <path
-                    d='M9.55423 5.24L6.17123 1.335C5.78123 0.885 5.06623 0.887 4.61323 1.341L1.83123 4.128C1.00323 4.957 0.766232 6.188 1.24523 7.175C4.10685 13.1 8.88528 17.8851 14.8062 20.755C15.7922 21.234 17.0222 20.997 17.8502 20.168L20.6582 17.355C21.1132 16.9 21.1142 16.181 20.6602 15.791L16.7402 12.426C16.3302 12.074 15.6932 12.12 15.2822 12.532L13.9182 13.898C13.8484 13.9712 13.7565 14.0194 13.6566 14.0353C13.5567 14.0512 13.4543 14.0339 13.3652 13.986C11.1357 12.7021 9.28622 10.8502 8.00523 8.619C7.95726 8.52975 7.93989 8.42723 7.95578 8.32716C7.97168 8.22708 8.01996 8.13499 8.09323 8.065L9.45323 6.704C9.86523 6.29 9.91023 5.65 9.55423 5.239V5.24Z'
-                    stroke='white'
+                    d='M24 27V24.3333C24 22.9188 23.5224 21.5623 22.6722 20.5621C21.8221 19.5619 20.669 19 19.4667 19H11.5333C10.331 19 9.17795 19.5619 8.32778 20.5621C7.47762 21.5623 7 22.9188 7 24.3333V27'
+                    stroke='black'
+                    stroke-width='1.5'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                  />
+                  <path
+                    d='M16.5 14C18.9853 14 21 11.9853 21 9.5C21 7.01472 18.9853 5 16.5 5C14.0147 5 12 7.01472 12 9.5C12 11.9853 14.0147 14 16.5 14Z'
+                    stroke='black'
                     stroke-width='1.5'
                     stroke-linecap='round'
                     stroke-linejoin='round'
                   />
                 </svg>
-              </div>
-              <p className='mb-5'>Call To Us</p>
-            </div>
+              </Link>
+            </button>
+          </div>
+        </header>
 
-            {/* Form */}
+        {/* <div className='flex gap-2 pt-[45px] md:pt-[60px] lg:pt-[80px] mb-6 text-sm'>
+          <Link to='/' className='text-gray-500 hover:underline'>
+            Home
+          </Link>
+          <span className='text-gray-500'>/</span>
+          <p>404 Error</p>
+        </div> */}
 
-            <div>
-              <p className='mb-[16px]'>We are available 24/7, 7 days a week.</p>
-              <p className='mb-[32px]'>Phone: +8801611112222</p>
-              <hr className='border-t-2 border-[#7f7f7f]' />
-            </div>
+        <div className='text-center pt-[80px] p-[20px]'>
+          {/* Title */}
+          <h1 className='text-6xl md:text-8xl font-bold mb-[40px]'>
+            404 Not Found
+          </h1>
+
+          {/* Subtext */}
+          <p className='text-gray-600 text-lg mb-[80px]'>
+            Your visited page not found. You may go home page.
+          </p>
+
+          {/* Button */}
+          <div className='mb-[80px] md:mb-[100px] lg:mb-[140px]'>
+            <Link
+              to='/'
+              className='bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-md font-medium transition'
+            >
+              Back to home page
+            </Link>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
 
-export default Contact
+export default NotFound

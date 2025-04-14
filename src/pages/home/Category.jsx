@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import BestSelling from '../../components/Best_Selling/BestSelling'
 
 const Category = () => {
   return (
@@ -330,6 +331,7 @@ const Category = () => {
           </div>
         </div>
         <hr className='mt-[70px] text-gray-400' />
+        <BestSelling />
       </div>
     </div>
   )
