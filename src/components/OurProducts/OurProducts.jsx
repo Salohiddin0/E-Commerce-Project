@@ -43,10 +43,10 @@ const OurProducts = ({ handleAddToCart, handleAddToWishlist }) => {
 
         {/* Navigation arrows */}
         <div className='flex items-center gap-2'>
-          <button className='w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors'>
+          <button className='hidden md:block w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors'>
             <ChevronLeft className='w-5 h-5' />
           </button>
-          <button className='w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors'>
+          <button className='hidden md:block w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors'>
             <ChevronRight className='w-5 h-5' />
           </button>
         </div>
