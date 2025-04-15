@@ -10,6 +10,7 @@ import Apple14 from '../assets/hero_endframe__cvklg0xk3w6e_large 2.png'
 import AppleLogo from '../assets/1200px-Apple_gray_logo 1.png'
 import Footer from '../components/Footer'
 import Category from '../pages/home/Category'
+import UserDropdown from './UserDropdown/UserDropdown'
 
 export default function Home () {
   const [activeSlide, setActiveSlide] = useState(0)
@@ -63,6 +64,9 @@ export default function Home () {
       }
     }
   }, [open])
+
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef()
 
   const categories = [
     { name: "Woman's Fashion", hasSubmenu: true },
@@ -128,7 +132,7 @@ export default function Home () {
               About
             </Link>
             <Link
-              to='/signup'
+              to='/sign-up'
               className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
             >
               Sign Up
@@ -218,6 +222,7 @@ export default function Home () {
                 </svg>
               </Link>
             </button>
+           <UserDropdown />
           </div>
         </header>
 

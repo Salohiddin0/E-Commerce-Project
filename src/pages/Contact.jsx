@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import { Link } from 'react-router-dom'
+import UserDropdown from './UserDropdown/UserDropdown'
 
 const Contact = () => {
   return (
@@ -53,7 +54,7 @@ const Contact = () => {
               About
             </Link>
             <Link
-              to='/signup'
+              to='/sign-up'
               className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
             >
               Sign Up

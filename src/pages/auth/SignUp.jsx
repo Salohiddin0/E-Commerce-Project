@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../../components/Navbar'
-import Side1 from '../../assets/Side Image.png'
 import { FcGoogle } from 'react-icons/fc' // Make sure to install react-icons
 import Footer from '../../components/Footer'
+
+import Side1 from '../../assets/Side Image.png'
+
 
 const SignUp = () => {
   return (
@@ -35,7 +37,7 @@ const SignUp = () => {
               About
             </Link>
             <Link
-              to='/signup'
+              to='/sign-up'
               className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
             >
               Sign Up
@@ -84,10 +86,10 @@ const SignUp = () => {
         {/* Right side - Form */}
         <div className='w-full md:w-1/2 p-6 md:p-12 flex items-center justify-center'>
           <div className='w-full max-w-md'>
-            <h1 className='text-3xl font-medium mb-[24px]'>
+            <h1 className='text-3xl font-medium mb-[24px] ms-4'>
               Create an account
             </h1>
-            <p className='text-gray-500 mb-8'>Enter your details below</p>
+            <p className='text-gray-500 mb-8 ms-4'>Enter your details below</p>
 
             <form className='space-y-4'>
               <div>
@@ -133,7 +135,7 @@ const SignUp = () => {
             <div className='mt-6 text-center'>
               <span className='text-gray-600'>Already have account?</span>{' '}
               <Link
-                to='/login'
+                to='/log-in'
                 className='text-blue-600 ms-2 font-medium hover:underline'
               >
                 Log in

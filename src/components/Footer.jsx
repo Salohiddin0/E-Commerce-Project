@@ -47,7 +47,7 @@ const Footer = () => {
                 <h2 className='text-xl font-bold mb-4'>Support</h2>
                 <p className='mb-2'>111 Bijoy sarani, Dhaka,</p>
                 <p className='mb-2'>DH 1515, Bangladesh</p>
-                <p className='mb-2'>exclusive@gmail.com</p>
+                <Link className='mb-2'>exclusive@gmail.com</Link>
                 <p className='mb-2'>+998-90-302-96-83</p>
               </div>
 
@@ -61,7 +61,7 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to='/login' className='hover:underline'>
+                    <Link to='/log-in' className='hover:underline'>
                       Login / Register
                     </Link>
                   </li>
@@ -393,7 +393,7 @@ const Footer = () => {
 
             {/* Copyright */}
             <div className='border-t border-gray-800 mt-12 pt-8 text-center text-gray-400'>
-              <p>© Copyright Sulaymonov Salohiddin 2025. All right reserved</p>
+              <p>© Copyright Salohiddin 2025. All right reserved</p>
             </div>
           </div>
         </div>

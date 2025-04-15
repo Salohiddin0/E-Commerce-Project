@@ -20,8 +20,9 @@ const ProductCard = ({ product, handleAddToWishlist, handleAddToCart }) => {
 
         {/* Icons */}
         <div className='absolute top-2 right-2 flex flex-col gap-2'>
-          <button
+          <Link
             onClick={() => handleAddToWishlist(product)}
+            to={`/product/${product.id}`}
             className='bg-white p-2 rounded-full shadow hover:bg-gray-100'
           >
             <svg
@@ -39,7 +40,7 @@ const ProductCard = ({ product, handleAddToWishlist, handleAddToCart }) => {
                 strokeLinejoin='round'
               />
             </svg>
-          </button>
+          </Link>
           <Link
             to={`/product/${product.id}`}
             className='bg-white p-2 rounded-full shadow hover:bg-gray-100'

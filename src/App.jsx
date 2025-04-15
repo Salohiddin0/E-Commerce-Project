@@ -6,7 +6,8 @@ import SignUp from './pages/auth/SignUp'
 import Navbar from './components/Navbar'
 import CategoryAll from './pages/CategoryAll'
 import NotFound from './pages/error/NotFound'
-import { LogIn } from 'lucide-react'
+import Login from './pages/auth/Login'
+import UserDropdown from './pages/UserDropdown/UserDropdown'
 
 function App () {
   return (
@@ -16,10 +17,11 @@ function App () {
         <Route path='/' element={<Navbar />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/login' element={<LogIn />} />
+        <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/log-in' element={<Login />} />
         <Route path='/by-category/:categoryName ' element={<CategoryAll />} />
         <Route path='*' element={<NotFound />} />
+        <Route path='/' element={<UserDropdown />} />
       </Routes>
     </Router>
   )
