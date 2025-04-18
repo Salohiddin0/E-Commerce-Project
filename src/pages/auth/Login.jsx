@@ -81,9 +81,9 @@ const Login = () => {
           {/* Right side - Form */}
           <div className='w-full md:w-1/2 p-6 md:p-12 flex items-center justify-center'>
             <div className='w-full max-w-md'>
-              <h1 className='text-3xl font-medium mb-[24px] ms-3'>
+              <Link to={'/'} className='text-3xl font-medium mb-[24px] ms-3'>
                 Log in to Exclusive
-              </h1>
+              </Link>
               <p className='text-gray-500 mb-8 ms-4'>
                 Enter your details below
               </p>

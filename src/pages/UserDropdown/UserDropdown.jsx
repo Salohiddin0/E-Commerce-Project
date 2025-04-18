@@ -31,7 +31,10 @@ export default function UserDropdown () {
 
   return (
     <div className='relative' ref={dropdownRef}>
-      <button onClick={() => setOpen(!open)} className='focus:outline-none hidden md:block'>
+      <button
+        onClick={() => setOpen(!open)}
+        className='focus:outline-none hidden md:block'
+      >
         <svg
           width='32'
           height='32'

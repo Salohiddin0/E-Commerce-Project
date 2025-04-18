@@ -1,9 +1,34 @@
-import React from 'react'
+'use client'
+
+import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { Link } from 'react-router-dom'
-import UserDropdown from './UserDropdown/UserDropdown'
+import Footer from '../components/Footer'
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+
+  const handleChange = e => {
+    const { name, value } = e.target
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    // Handle form submission logic here
+    console.log('Form submitted:', formData)
+    // Reset form after submission
+    setFormData({ name: '', email: '', phone: '', message: '' })
+  }
+
   return (
     <div>
       <Navbar />
@@ -12,27 +37,6 @@ const Contact = () => {
           <Link to={'/'} className='hidden md:block text-2xl font-bold'>
             Exclusive
           </Link>
-
-          <div
-            onClick={() => setOpen(!open)}
-            className='w-8 h-6 flex flex-col justify-between items-center cursor-pointer group md:hidden'
-          >
-            <span
-              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
-                open ? 'rotate-45 translate-y-2.5' : ''
-              }`}
-            />
-            <span
-              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
-                open ? 'opacity-0' : ''
-              }`}
-            />
-            <span
-              className={`h-1 w-full bg-zinc-600 rounded transition-all duration-300 ${
-                open ? '-rotate-45 -translate-y-2.5' : ''
-              }`}
-            />
-          </div>
 
           <nav className='hidden md:flex space-x-8'>
             <Link
@@ -61,7 +65,7 @@ const Contact = () => {
             </Link>
           </nav>
 
-          <div className='flex items-center space-x-4'>
+          <div className='flex items-center space-x-8'>
             <div className='relative'>
               <input
                 type='text'
@@ -146,7 +150,7 @@ const Contact = () => {
             </button>
           </div>
         </header>
-        <div className='flex gap-2 pt-[80px] mb-6 text-sm'>
+        <div className='flex gap-2 px-6 pt-[50px] md:pt-[80px] mb-[50px] md:mb-[80px] text-sm'>
           <Link to='/' className='text-gray-500 hover:underline'>
             Home
           </Link>
@@ -154,41 +158,139 @@ const Contact = () => {
           <p>Contact</p>
         </div>
 
-        {/* Content */}
-
-        <div className='bg-white w-[340px] h-[457px] shadow-xl'>
-          <div className='pt-[40px] pb-[51px] px-[35px]'>
-            <div className='flex gap-5 items-center'>
-              <div className='bg-red-600 text-white py-3 px-3 mb-5 rounded-full inline-block'>
-                <svg
-                  width='22'
-                  height='22'
-                  viewBox='0 0 22 22'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    d='M9.55423 5.24L6.17123 1.335C5.78123 0.885 5.06623 0.887 4.61323 1.341L1.83123 4.128C1.00323 4.957 0.766232 6.188 1.24523 7.175C4.10685 13.1 8.88528 17.8851 14.8062 20.755C15.7922 21.234 17.0222 20.997 17.8502 20.168L20.6582 17.355C21.1132 16.9 21.1142 16.181 20.6602 15.791L16.7402 12.426C16.3302 12.074 15.6932 12.12 15.2822 12.532L13.9182 13.898C13.8484 13.9712 13.7565 14.0194 13.6566 14.0353C13.5567 14.0512 13.4543 14.0339 13.3652 13.986C11.1357 12.7021 9.28622 10.8502 8.00523 8.619C7.95726 8.52975 7.93989 8.42723 7.95578 8.32716C7.97168 8.22708 8.01996 8.13499 8.09323 8.065L9.45323 6.704C9.86523 6.29 9.91023 5.65 9.55423 5.239V5.24Z'
-                    stroke='white'
-                    stroke-width='1.5'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                  />
-                </svg>
+        {/* Contact Section */}
+        <div className='flex flex-col md:flex-row md:justify-center gap-8 mb-[80px] md:mb-[140px]'>
+          {/* Left Side - Contact Information */}
+          <div className='bg-white w-[340px] h-auto shadow-xl rounded-lg mx-auto md:mx-0'>
+            <div className='pt-10 px-9'>
+              {/* Call To Us */}
+              <div className='flex gap-4 items-center mb-4'>
+                <div className='bg-red-600 text-white p-3 rounded-full inline-flex items-center justify-center'>
+                  <svg
+                    width='22'
+                    height='22'
+                    viewBox='0 0 22 22'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M9.55423 5.24L6.17123 1.335C5.78123 0.885 5.06623 0.887 4.61323 1.341L1.83123 4.128C1.00323 4.957 0.766232 6.188 1.24523 7.175C4.10685 13.1 8.88528 17.8851 14.8062 20.755C15.7922 21.234 17.0222 20.997 17.8502 20.168L20.6582 17.355C21.1132 16.9 21.1142 16.181 20.6602 15.791L16.7402 12.426C16.3302 12.074 15.6932 12.12 15.2822 12.532L13.9182 13.898C13.8484 13.9712 13.7565 14.0194 13.6566 14.0353C13.5567 14.0512 13.4543 14.0339 13.3652 13.986C11.1357 12.7021 9.28622 10.8502 8.00523 8.619C7.95726 8.52975 7.93989 8.42723 7.95578 8.32716C7.97168 8.22708 8.01996 8.13499 8.09323 8.065L9.45323 6.704C9.86523 6.29 9.91023 5.65 9.55423 5.239V5.24Z'
+                      stroke='white'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </div>
+                <h3 className='font-semibold text-lg'>Call To Us</h3>
               </div>
-              <p className='mb-5'>Call To Us</p>
-            </div>
 
-            {/* Form */}
+              <div className='mb-8'>
+                <p className='text-md mb-4'>
+                  We are available 24/7, 7 days a week.
+                </p>
+                <p className='text-md'>Phone: +998903029683</p>
+              </div>
 
-            <div>
-              <p className='mb-[16px]'>We are available 24/7, 7 days a week.</p>
-              <p className='mb-[32px]'>Phone: +8801611112222</p>
-              <hr className='border-t-2 border-[#7f7f7f]' />
+              <hr className='border-t border-gray-300 mb-8' />
+
+              {/* Write To Us */}
+              <div className='flex gap-4 items-center mb-4'>
+                <div className='bg-red-600 text-white p-3 rounded-full inline-flex items-center justify-center'>
+                  <svg
+                    width='25'
+                    height='25'
+                    viewBox='0 0 40 40'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M10 13L20 20L30 13M10 27H30V13H10V27Z'
+                      stroke='white'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </div>
+                <h3 className='font-semibold text-lg'>Write To Us</h3>
+              </div>
+
+              <div className='pb-10'>
+                <p className='text-md mb-4'>
+                  Fill out our form and we will contact you within 24 hours.
+                </p>
+                <p className='text-md mb-[16px]'>
+                  Emails: customer@exclusive.com
+                </p>
+                <p className='text-md'>Emails: support@exclusive.com</p>
+              </div>
             </div>
+          </div>
+
+          {/* Right Side - Contact Form */}
+          <div className='w-full md:flex-1 mt-8 md:mt-0 bg-white rounded-lg shadow-lg p-8 mt-10'>
+            <form onSubmit={handleSubmit} className='space-y-6'>
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
+                <div>
+                  <input
+                    type='text'
+                    name='name'
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder='Your Name *'
+                    className='w-full px-4 py-4 bg-gray-100 rounded-md focus:outline-none'
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type='email'
+                    name='email'
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder='Your Email *'
+                    className='w-full px-4 py-4 bg-gray-100 rounded-md focus:outline-none'
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type='tel'
+                    name='phone'
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder='Your Phone *'
+                    className='w-full px-4 py-4 bg-gray-100 rounded-md focus:outline-none'
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <textarea
+                  name='message'
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder='Your Message'
+                  rows={8}
+                  className='w-full px-4 py-4 bg-gray-100 rounded-md focus:outline-none'
+                ></textarea>
+              </div>
+
+              <div className='flex justify-end'>
+                <button
+                  type='submit'
+                  className='bg-red-600 hover:bg-red-700 text-white font-medium px-10 py-4 rounded-md transition-colors duration-300 shadow-md'
+                >
+                  Send Message
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
