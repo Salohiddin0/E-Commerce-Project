@@ -5,12 +5,14 @@ const ProductCard = ({ product, handleAddToWishlist, handleAddToCart }) => {
   return (
     <div className='group relative border rounded-sm overflow-hidden'>
       <div className='relative group/card cursor-pointer'>
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product-detail/${product.id}`}>
+          <div className='make-gray'>
           <img
             src={product.image || '/placeholder.svg'}
             alt={product.title}
-            className='w-full h-48 object-contain bg-[#f5f5f5] p-4'
+            className='w-full h-48 object-contain p-4'
           />
+          </div>
         </Link>
 
         {/* Discount */}

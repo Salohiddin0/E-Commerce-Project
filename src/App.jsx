@@ -8,6 +8,7 @@ import CategoryAll from './pages/CategoryAll'
 import NotFound from './pages/error/NotFound'
 import Login from './pages/auth/Login'
 import UserDropdown from './pages/UserDropdown/UserDropdown'
+import ProductDetail from './components/product/ProductDetail'
 
 function App () {
   return (
@@ -22,6 +23,7 @@ function App () {
         <Route path='/by-category/:categoryName ' element={<CategoryAll />} />
         <Route path='*' element={<NotFound />} />
         <Route path='/' element={<UserDropdown />} />
+        <Route path='/product-detail/:id' element={<ProductDetail />} />
       </Routes>
     </Router>
   )

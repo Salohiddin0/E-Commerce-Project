@@ -5,7 +5,6 @@ import { fetchProducts } from '..//../redux/slices/productSlice' // Redux slice 
 import ProductCard from '../product/ProductCard' // Import pathga E'TIBOR BER!!!
 import { Link } from 'react-router-dom'
 import Showcase from '../Showcase/Showcase'
-import { div } from 'framer-motion/client'
 
 const BestSelling = ({ handleAddToCart, handleAddToWishlist }) => {
   const dispatch = useDispatch()
