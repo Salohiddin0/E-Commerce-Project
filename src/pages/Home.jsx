@@ -222,7 +222,7 @@ export default function Home () {
                 </svg>
               </Link>
             </button>
-           <UserDropdown />
+            <UserDropdown />
           </div>
         </header>
 

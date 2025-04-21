@@ -33,6 +33,7 @@ const Contact = () => {
     <div>
       <Navbar />
       <div className='max-w-screen-xl mx-auto'>
+        {/* Header */}
         <header className='flex items-center justify-between border-b py-4 px-6 relative z-20'>
           <Link to={'/'} className='hidden md:block text-2xl font-bold'>
             Exclusive
@@ -150,6 +151,7 @@ const Contact = () => {
             </button>
           </div>
         </header>
+        {/* Header AND */}
         <div className='flex gap-2 px-6 pt-[50px] md:pt-[80px] mb-[50px] md:mb-[80px] text-sm'>
           <Link to='/' className='text-gray-500 hover:underline'>
             Home

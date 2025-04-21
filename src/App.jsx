@@ -9,6 +9,7 @@ import NotFound from './pages/error/NotFound'
 import Login from './pages/auth/Login'
 import UserDropdown from './pages/UserDropdown/UserDropdown'
 import ProductDetail from './components/product/ProductDetail'
+import Account from './pages/account/Account'
 
 function App () {
   return (
@@ -24,6 +25,7 @@ function App () {
         <Route path='*' element={<NotFound />} />
         <Route path='/' element={<UserDropdown />} />
         <Route path='/product-detail/:id' element={<ProductDetail />} />
+        <Route path='/account' element={<Account />} />
       </Routes>
     </Router>
   )
