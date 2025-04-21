@@ -11,6 +11,7 @@ import Navbar from '../Navbar'
 import UserDropdown from './../../pages/UserDropdown/UserDropdown'
 import ProductItemImage from './item/ProductItemImage'
 import ProductCard from './ProductCard'
+import Footer from './../Footer'
 
 const ProductDetail = () => {
   const dispatch = useDispatch()
@@ -86,7 +87,7 @@ const ProductDetail = () => {
   return (
     <div>
       <Navbar />
-      <div className='max-w-screen-xl mx-auto px-4 py-8'>
+      <div className='max-w-screen-xl mx-auto px-4'>
         <header className='flex items-center justify-between border-b py-4 px-6 relative z-20'>
           <Link to={'/'} className='hidden md:block text-2xl font-bold'>
             Exclusive
@@ -206,7 +207,7 @@ const ProductDetail = () => {
         </header>
 
         {/* Breadcrumb */}
-        <div className='flex items-center gap-2 text-sm text-gray-500 mb-[80px] mt-[80px]'>
+        <div className='flex items-center gap-2 text-sm text-gray-500 mb-[50px] md:mb-[80px] mt-[40px] md:mt-[80px]'>
           <a href='/' className='hover:text-gray-700'>
             Account
           </a>
@@ -395,7 +396,7 @@ const ProductDetail = () => {
               </Link>
             </div>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-[80px] md:mb-[140px]'>
               {relatedProducts.slice(0, 4).map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -403,6 +404,7 @@ const ProductDetail = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   )
 }
