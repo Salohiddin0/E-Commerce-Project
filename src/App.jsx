@@ -10,6 +10,7 @@ import Login from './pages/auth/Login'
 import UserDropdown from './pages/UserDropdown/UserDropdown'
 import ProductDetail from './components/product/ProductDetail'
 import Account from './pages/account/Account'
+import Wishlist from './pages/wishlist/Wishlist'
 
 function App () {
   return (
@@ -26,6 +27,7 @@ function App () {
         <Route path='/' element={<UserDropdown />} />
         <Route path='/product-detail/:id' element={<ProductDetail />} />
         <Route path='/account' element={<Account />} />
+        <Route path='/wishlist' element={<Wishlist />} />
       </Routes>
     </Router>
   )

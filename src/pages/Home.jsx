@@ -164,7 +164,7 @@ export default function Home () {
               </span>
             </div>
             <button className=''>
-              <Link to={'/like'} style={{ fontSize: '20px' }}>
+              <Link to={'/wishlist'} style={{ fontSize: '20px' }}>
                 <svg
                   width='22'
                   height='20'

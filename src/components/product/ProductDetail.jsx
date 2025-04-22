@@ -23,6 +23,10 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0)
   const [quantity, setQuantity] = useState(1)
 
+  // const handleWishlistClick = () => {
+  //   dispatch(addToWishlist(product))
+  // }
+
   useEffect(() => {
     // If we don't have items yet, fetch all products for related items
     if (items.length === 0) {
@@ -51,7 +55,7 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className='container mx-auto px-4 py-8 flex justify-center items-center h-64'>
+      <div className='container mx-auto px-4 py-8 mt-44 flex justify-center items-center h-64'>
         <div className='text-center'>
           <div className='inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-500 mb-4'></div>
           <p>Loading products...</p>
@@ -144,7 +148,7 @@ const ProductDetail = () => {
               </span>
             </div>
             <button className=''>
-              <Link to={'/like'} style={{ fontSize: '20px' }}>
+              <Link to={'/wishlist'} style={{ fontSize: '20px' }}>
                 <svg
                   width='22'
                   height='20'
@@ -353,7 +357,10 @@ const ProductDetail = () => {
                 Buy Now
               </button>
 
-              <button className='border border-gray-300 p-2 rounded'>
+              <button
+                // onClick={handleWishlistClick}
+                className='border border-gray-300 p-2 rounded'
+              >
                 <Heart className='w-5 h-5' />
               </button>
             </div>
@@ -397,7 +404,7 @@ const ProductDetail = () => {
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-[80px] md:mb-[140px]'>
-              {relatedProducts.slice(0, 4).map(product => (
+              {relatedProducts.slice(0, 8).map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>

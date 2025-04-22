@@ -1,30 +1,35 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { addToWishlist } from '../../redux/slices/wishlistSlice'
 
-const ProductCard = ({ product, handleAddToWishlist, handleAddToCart }) => {
+const ProductCard = ({ product, handleAddToCart }) => {
+  const dispatch = useDispatch()
+
+  const handleWishlistClick = () => {
+    dispatch(addToWishlist(product))
+  }
+
   return (
-    <div className='group relative border rounded-sm overflow-hidden'>
+    <div className='group relative border rounded-sm overflow-hidden flex flex-col'>
       <div className='relative group/card cursor-pointer'>
         <Link to={`/product-detail/${product.id}`}>
           <div className='make-gray'>
-          <img
-            src={product.image || '/placeholder.svg'}
-            alt={product.title}
-            className='w-full h-48 object-contain p-4'
-          />
+            <img
+              src={product.image || '/placeholder.svg'}
+              alt={product.title}
+              className='w-full h-48 object-contain p-4'
+            />
           </div>
         </Link>
 
-        {/* Discount */}
         <span className='absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded'>
           -{product.discount}%
         </span>
 
-        {/* Icons */}
         <div className='absolute top-2 right-2 flex flex-col gap-2'>
-          <Link
-            onClick={() => handleAddToWishlist(product)}
-            to={`/product/${product.id}`}
+          <button
+            onClick={handleWishlistClick}
             className='bg-white p-2 rounded-full shadow hover:bg-gray-100'
           >
             <svg
@@ -42,11 +47,8 @@ const ProductCard = ({ product, handleAddToWishlist, handleAddToCart }) => {
                 strokeLinejoin='round'
               />
             </svg>
-          </Link>
-          <Link
-            to={`/product/${product.id}`}
-            className='bg-white p-2 rounded-full shadow hover:bg-gray-100'
-          >
+          </button>
+          <Link className='bg-white p-2 rounded-full shadow hover:bg-gray-100'>
             <svg
               width='24'
               height='24'
@@ -72,7 +74,6 @@ const ProductCard = ({ product, handleAddToWishlist, handleAddToCart }) => {
           </Link>
         </div>
 
-        {/* Add to Cart: only appears on hover */}
         <button
           onClick={() => handleAddToCart(product)}
           className='absolute inset-x-0 bottom-0 bg-black text-white py-2 text-sm opacity-0 group-hover/card:opacity-100 transition-opacity duration-300'
@@ -81,8 +82,7 @@ const ProductCard = ({ product, handleAddToWishlist, handleAddToCart }) => {
         </button>
       </div>
 
-      {/* Product Info */}
-      <div className='bg-white p-4'>
+      <div className='bg-white p-4 flex flex-col justify-between'>
         <h3 className='text-sm font-semibold mb-2'>{product.title}</h3>
         <div className='flex items-center gap-2 text-sm'>
           <span className='text-red-500 font-semibold'>
@@ -92,13 +92,23 @@ const ProductCard = ({ product, handleAddToWishlist, handleAddToCart }) => {
             ${product.originalPrice}
           </span>
         </div>
-        <div className='flex items-center gap-1 mt-1 text-yellow-500'>
-          {[...Array(5)].map((_, index) => (
-            <span key={index}>⭐</span>
-          ))}
-          <span className='text-gray-500 text-xs ml-1'>
-            ({product.reviews})
-          </span>
+        <div className='flex items-center gap-1 mt-2'>
+          <div className='flex text-yellow-400'>
+            {[...Array(5)].map((_, i) => (
+              <svg
+                key={i}
+                className={`w-4 h-4 ${
+                  i < Math.round(product.rating.rate)
+                    ? 'fill-current'
+                    : 'fill-gray-300'
+                }`}
+                viewBox='0 0 20 20'
+              >
+                <path d='M10 15.27L16.18 19L14.54 11.97L20 7.24L12.81 6.63L10 0L7.19 6.63L0 7.24L5.46 11.97L3.82 19L10 15.27Z' />
+              </svg>
+            ))}
+          </div>
+          <span className='text-sm text-gray-500'>({product.reviews})</span>
         </div>
       </div>
     </div>

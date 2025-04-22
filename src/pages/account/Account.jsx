@@ -140,14 +140,15 @@ const Account = () => {
           </p>
         </div>
 
-        <div className='flex flex-col lg:flex-row gap-10 mb-20 lg:mb-36 px-4'>
+        <div className='flex flex-col lg:flex-row gap-10 mb-20 lg:mb-36 px-4 '>
           {/* Left Side */}
           <div className='w-full lg:max-w-[300px]'>
             <p className='text-lg font-semibold'>Manage My Account</p>
-            <div className='flex flex-col mt-4 mb-6'>
+            <div className='flex flex-col mt-4 mb-6 '>
               {['My Profile', 'Address Book', 'My Payment Options'].map(
                 item => (
                   <Link
+                    to={'/'}
                     key={item}
                     className='m-1 text-slate-400 hover:text-red-500'
                   >

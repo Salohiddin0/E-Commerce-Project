@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 
 import Frame1 from '..//../assets/Frame 694.png'
 import OurProducts from '../OurProducts/OurProducts'
-import { div } from 'framer-motion/client'
 
 export default function Showcase () {
   // Countdown timer state
