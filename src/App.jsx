@@ -11,6 +11,7 @@ import UserDropdown from './pages/UserDropdown/UserDropdown'
 import ProductDetail from './components/product/ProductDetail'
 import Account from './pages/account/Account'
 import Wishlist from './pages/wishlist/Wishlist'
+import ViewAllProducts from './pages/ViewAllProducts/ViewAllProducts'
 
 function App () {
   return (
@@ -28,6 +29,7 @@ function App () {
         <Route path='/product-detail/:id' element={<ProductDetail />} />
         <Route path='/account' element={<Account />} />
         <Route path='/wishlist' element={<Wishlist />} />
+        <Route path='/view-all' element={<ViewAllProducts />} />
       </Routes>
     </Router>
   )

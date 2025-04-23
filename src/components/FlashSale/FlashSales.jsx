@@ -196,10 +196,13 @@ const FlashSales = () => {
 
         {/* View all products button */}
         <div className='flex justify-center mt-10'>
-          <button className='bg-red-500 hover:bg-red-600 mb-[60px] text-white px-8 py-3 rounded-md font-medium transition-colors duration-300'>
-            View All Products
-          </button>
+          <Link to='/view-all'>
+            <button className='bg-red-500 hover:bg-red-600 mb-[60px] text-white px-8 py-3 rounded-md font-medium transition-colors duration-300'>
+              View All Products
+            </button>
+          </Link>
         </div>
+
         <hr />
       </div>
     </div>

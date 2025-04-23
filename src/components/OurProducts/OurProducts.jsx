@@ -3,6 +3,7 @@ import ProductCard from '../product/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from '../../redux/slices/productSlice'
 import { ChevronLeft, ChevronRight } from 'lucide-react' // Agar lucide-react o'rnatilmagan bo'lsa, o'rnatish kerak
+import { Link } from 'react-router-dom'
 
 const OurProducts = ({ handleAddToCart, handleAddToWishlist }) => {
   const dispatch = useDispatch()
@@ -72,9 +73,9 @@ const OurProducts = ({ handleAddToCart, handleAddToWishlist }) => {
 
       {/* View All Products Button */}
       <div className='flex justify-center mb-[60px]'>
-        <button className='bg-red-500 hover:bg-red-600 text-white py-3 px-8 rounded transition-colors'>
+        <Link to='/view-all' className='bg-red-500 hover:bg-red-600 text-white py-3 px-8 rounded transition-colors'>
           View All Products
-        </button>
+        </Link>
       </div>
     </div>
   )
