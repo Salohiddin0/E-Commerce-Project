@@ -19,7 +19,7 @@ const Wishlist = () => {
       <div className='max-w-screen-xl mx-auto'>
         {/* Header */}
 
-        <header className='flex items-center justify-between border-b py-4 px-6 relative z-20 mb-[80px]'>
+        <header className='flex items-center justify-between border-b py-4 px-6 relative z-20 mb-[30px] md:mb-[80px]'>
           <Link to={'/'} className='hidden md:block text-2xl font-bold'>
             Exclusive
           </Link>
@@ -140,7 +140,7 @@ const Wishlist = () => {
 
         {/* Main Content */}
 
-        <div className='flex justify-between items-center mb-6'>
+        <div className='flex justify-between items-center mb-6 p-[20px]'>
           <h1 className='text-2xl font-semibold'>
             Wishlist ({wishlistItems.length})
           </h1>
@@ -157,7 +157,7 @@ const Wishlist = () => {
         {wishlistItems.length === 0 ? (
           <p className='text-gray-500'>Your wishlist is empty.</p>
         ) : (
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-[60px]'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:mb-[60px] p-[20px]'>
             {wishlistItems.map(product => (
               <div
                 key={product.id}
