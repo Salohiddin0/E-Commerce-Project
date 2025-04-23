@@ -7,6 +7,7 @@ import {
 import Navbar from '../../components/Navbar'
 import { Link } from 'react-router-dom'
 import UserDropdown from '../UserDropdown/UserDropdown'
+import ProductCard from '../../components/product/ProductCard'
 
 const Wishlist = () => {
   const wishlistItems = useSelector(state => state.wishlist.items)
@@ -140,13 +141,15 @@ const Wishlist = () => {
         {/* Main Content */}
 
         <div className='flex justify-between items-center mb-6'>
-          <h1 className='text-2xl font-semibold'>Your Wishlist</h1>
+          <h1 className='text-2xl font-semibold'>
+            Wishlist ({wishlistItems.length})
+          </h1>
           {wishlistItems.length > 0 && (
             <button
-              className='bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600'
+              className=' text-black border border-slate-400 px-5 py-3 rounded'
               onClick={() => dispatch(clearWishlist())}
             >
-              Clear All
+              Move All To Bag
             </button>
           )}
         </div>
@@ -154,34 +157,158 @@ const Wishlist = () => {
         {wishlistItems.length === 0 ? (
           <p className='text-gray-500'>Your wishlist is empty.</p>
         ) : (
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
-            {wishlistItems.map(item => (
-              <div key={item.id} className='border rounded p-4'>
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className='h-40 object-contain mb-2'
-                />
-                <h3 className='font-semibold'>{item.title}</h3>
-                <p className='text-sm text-gray-600'>${item.currentPrice}</p>
-                <div className='mt-2 flex justify-between items-center'>
-                  <Link
-                    to={`/product-detail/${item.id}`}
-                    className='text-blue-500 text-sm underline'
-                  >
-                    View
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-[60px]'>
+            {wishlistItems.map(product => (
+              <div
+                key={product.id}
+                className='group relative border rounded-sm overflow-hidden flex flex-col'
+              >
+                <div className='relative group/card cursor-pointer'>
+                  <Link to={`/product-detail/${product.id}`}>
+                    <div className='make-gray'>
+                      <img
+                        src={product.image || '/placeholder.svg'}
+                        alt={product.title}
+                        className='w-full h-48 object-contain p-4'
+                      />
+                    </div>
                   </Link>
+
+                  <span className='absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded'>
+                    -{product.discount}%
+                  </span>
+
+                  <div className='absolute top-2 right-2 flex flex-col gap-2'>
+                    <button
+                      onClick={() => dispatch(removeFromWishlist(product.id))}
+                      className='bg-white p-1 rounded-full shadow'
+                    >
+                      <svg
+                        width='34'
+                        height='34'
+                        viewBox='0 0 34 34'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                      >
+                        <circle cx='17' cy='17' r='17' fill='white' />
+                        <path
+                          d='M25 10.5714H10.3333L11.6667 26H22.3333L23.6667 10.5714H9M17 14.4286V22.1429M20.3333 14.4286L19.6667 22.1429M13.6667 14.4286L14.3333 22.1429M14.3333 10.5714L15 8H19L19.6667 10.5714'
+                          stroke='black'
+                          stroke-width='1.56'
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                        />
+                      </svg>
+                    </button>
+                  </div>
                   <button
-                    className='text-red-500 text-sm'
-                    onClick={() => dispatch(removeFromWishlist(item.id))}
+                    onClick={() => handleAddToCart(product)}
+                    className='absolute inset-x-0 bottom-0 bg-black text-white py-2 text-sm flex justify-center items-center gap-2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300'
                   >
-                    Remove
+                    <svg
+                      width='25'
+                      height='24'
+                      viewBox='0 0 25 24'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path
+                        d='M8.75 20.25C9.16421 20.25 9.5 19.9142 9.5 19.5C9.5 19.0858 9.16421 18.75 8.75 18.75C8.33579 18.75 8 19.0858 8 19.5C8 19.9142 8.33579 20.25 8.75 20.25Z'
+                        stroke='white'
+                        stroke-width='1.5'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      />
+                      <path
+                        d='M19.25 20.25C19.6642 20.25 20 19.9142 20 19.5C20 19.0858 19.6642 18.75 19.25 18.75C18.8358 18.75 18.5 19.0858 18.5 19.5C18.5 19.9142 18.8358 20.25 19.25 20.25Z'
+                        stroke='white'
+                        stroke-width='1.5'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      />
+                      <path
+                        d='M2.75 3.75H5.75L8 16.5H20'
+                        stroke='white'
+                        stroke-width='1.5'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      />
+                      <path
+                        d='M8 12.5H19.6925C19.7792 12.5001 19.8633 12.4701 19.9304 12.4151C19.9975 12.3601 20.0434 12.2836 20.0605 12.1986L21.4105 5.44859C21.4214 5.39417 21.42 5.338 21.4066 5.28414C21.3931 5.23029 21.3679 5.18009 21.3327 5.13717C21.2975 5.09426 21.2532 5.05969 21.203 5.03597C21.1528 5.01225 21.098 4.99996 21.0425 5H6.5'
+                        stroke='white'
+                        stroke-width='1.5'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      />
+                    </svg>
+                    Add To Cart
                   </button>
+                </div>
+
+                <div className='bg-white p-4 flex flex-col justify-between'>
+                  <h3 className='text-sm font-semibold mb-2'>
+                    {product.title}
+                  </h3>
+                  <div className='flex items-center gap-2 text-sm'>
+                    <span className='text-red-500 font-semibold'>
+                      ${product.currentPrice}
+                    </span>
+                    <span className='line-through text-gray-400'>
+                      ${product.originalPrice}
+                    </span>
+                  </div>
+                  <div className='flex items-center gap-1 mt-2'>
+                    <div className='flex text-yellow-400'>
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          key={i}
+                          className={`w-4 h-4 ${
+                            i < Math.round(product.rating?.rate)
+                              ? 'fill-current'
+                              : 'fill-gray-300'
+                          }`}
+                          viewBox='0 0 20 20'
+                        >
+                          <path d='M10 15.27L16.18 19L14.54 11.97L20 7.24L12.81 6.63L10 0L7.19 6.63L0 7.24L5.46 11.97L3.82 19L10 15.27Z' />
+                        </svg>
+                      ))}
+                    </div>
+                    <span className='text-sm text-gray-500'>
+                      ({product.reviews})
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         )}
+        <div className='mt-[80px]'>
+          <div className='flex justify-between items-center'>
+            <div className='bg-red-500 text-white py-2 px-6 rounded-r-full inline-block'>
+              <span className='font-medium'>Just For You</span>
+            </div>
+
+            <div>
+              <Link
+                to='/view-all'
+                className='border border-slate-400 px-9 py-3 rounded-md font-medium text-center transition-colors duration-300'
+              >
+                See All
+              </Link>
+            </div>
+          </div>
+          <div></div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   )
