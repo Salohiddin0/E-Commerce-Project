@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
+import { useSelector } from 'react-redux'
+
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import FlashSales from '../components/FlashSale/FlashSales'
@@ -11,6 +13,7 @@ import AppleLogo from '../assets/1200px-Apple_gray_logo 1.png'
 import Footer from '../components/Footer'
 import Category from '../pages/home/Category'
 import UserDropdown from './UserDropdown/UserDropdown'
+import { span } from 'framer-motion/client'
 
 export default function Home () {
   const [activeSlide, setActiveSlide] = useState(0)
@@ -83,6 +86,7 @@ export default function Home () {
   const handleDotClick = index => {
     setActiveSlide(index)
   }
+  const wishlistCount = useSelector(state => state.wishlist.items.length)
 
   return (
     <div className='relative'>
@@ -181,6 +185,11 @@ export default function Home () {
                   />
                 </svg>
               </Link>
+              {wishlistCount > 0 && (
+                <span className='absolute top-[15px] right-[110px] bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {wishlistCount}
+                </span>
+              )}
             </button>
             <button className=''>
               <Link to={'/cart'} style={{ fontSize: '20px' }}>

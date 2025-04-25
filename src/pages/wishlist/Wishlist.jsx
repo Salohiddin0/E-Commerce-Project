@@ -93,6 +93,11 @@ const Wishlist = () => {
                   />
                 </svg>
               </Link>
+              {wishlistItems.length > 0 && (
+                <span className='absolute top-[15px] right-[110px] bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {wishlistItems.length}
+                </span>
+              )}
             </button>
             <button className=''>
               <Link to={'/cart'} style={{ fontSize: '20px' }}>
