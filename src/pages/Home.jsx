@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import FlashSales from '../components/FlashSale/FlashSales'
 
-//  assets
 import Apple14 from '../assets/hero_endframe__cvklg0xk3w6e_large 2.png'
 import AppleLogo from '../assets/1200px-Apple_gray_logo 1.png'
 import Footer from '../components/Footer'
 import Category from '../pages/home/Category'
 import UserDropdown from './UserDropdown/UserDropdown'
+import Chat from '../pages/chat/chat'
 
 export default function Home () {
   const [activeSlide, setActiveSlide] = useState(0)
@@ -20,6 +20,8 @@ export default function Home () {
   const mobileMenuRef = useRef(null)
   const navLinksRef = useRef(null)
   const categoriesRef = useRef(null)
+  const [message, setMessage] = useState('')
+  const [messages, setMessages] = useState([])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -439,6 +441,25 @@ export default function Home () {
         </div>
         <FlashSales />
         <Category />
+        <div>
+          <button
+            onClick={() => setIsOpen(true)}
+            className='fixed bottom-4 right-9 bg-blue-500 text-white p-4 rounded-full'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='40'
+              height='40'
+              fill='currentColor'
+              viewBox='0 0 16 16'
+            >
+              <path d='M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2' />
+              <path d='m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2' />
+            </svg>
+          </button>
+
+          <Chat isOpen={isOpen} setIsOpen={setIsOpen} />
+        </div>
       </div>
       <Footer />
     </div>
