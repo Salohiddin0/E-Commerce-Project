@@ -45,6 +45,8 @@ const ProductDetail = () => {
     }
   }
 
+  const wishlistCount = useSelector(state => state.wishlist.items.length)
+
   const handleAddToCart = () => {
     if (currentProduct) {
       dispatch(addToCart({ ...currentProduct, quantity }))
@@ -165,6 +167,11 @@ const ProductDetail = () => {
                   />
                 </svg>
               </Link>
+              {wishlistCount > 0 && (
+                <span className='absolute top-[15px] right-[110px] bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {wishlistCount}
+                </span>
+              )}
             </button>
             <button className=''>
               <Link to={'/cart'} style={{ fontSize: '20px' }}>

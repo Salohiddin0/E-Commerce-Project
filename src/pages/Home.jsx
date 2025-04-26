@@ -13,7 +13,6 @@ import AppleLogo from '../assets/1200px-Apple_gray_logo 1.png'
 import Footer from '../components/Footer'
 import Category from '../pages/home/Category'
 import UserDropdown from './UserDropdown/UserDropdown'
-import { span } from 'framer-motion/client'
 
 export default function Home () {
   const [activeSlide, setActiveSlide] = useState(0)

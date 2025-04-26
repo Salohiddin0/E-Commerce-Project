@@ -12,6 +12,8 @@ import ProductDetail from './components/product/ProductDetail'
 import Account from './pages/account/Account'
 import Wishlist from './pages/wishlist/Wishlist'
 import ViewAllProducts from './pages/ViewAllProducts/ViewAllProducts'
+import Admin from './admiin/Admin'
+import Cart from './pages/cart/Cart'
 
 function App () {
   return (
@@ -30,6 +32,8 @@ function App () {
         <Route path='/account' element={<Account />} />
         <Route path='/wishlist' element={<Wishlist />} />
         <Route path='/view-all' element={<ViewAllProducts />} />
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
     </Router>
   )
