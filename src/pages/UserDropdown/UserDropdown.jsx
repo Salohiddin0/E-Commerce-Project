@@ -112,7 +112,7 @@ export default function UserDropdown () {
                   strokeLinejoin='round'
                 />
               </svg>
-              <Link to='/orders'>My Order</Link>
+              <Link to='/cart'>My Order</Link>
             </li>
             <li className='flex items-center px-4 py-3 hover:bg-gray-500/50'>
               <svg
@@ -181,7 +181,7 @@ export default function UserDropdown () {
                   strokeLinejoin='round'
                 />
               </svg>
-              <button onClick={() => alert('Logging out...')}>Logout</button>
+              <Link to='/log-in'>Logout</Link>
             </li>
           </ul>
         </div>

@@ -147,6 +147,14 @@ const Chat: React.FC<ChatProps> = ({ isOpen, setIsOpen }) => {
     return () => clearTimeout(timer) // Timerni to'xtatish
   }, [count]) // `count` o'zgarganda xabarlarni tekshirib turish
 
+  // Modal ochilganda xabarlarni tozalash
+  useEffect(() => {
+    if (isOpen) {
+      setMessages([]) // Modal ochilganda xabarlarni tozalash
+      setLastMessageId(null) // Oxirgi xabar ID'sini reset qilish
+    }
+  }, [isOpen])
+
   // "Enter" bosilganda xabar yuborish
   const handleKeyDownSend = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -154,6 +162,11 @@ const Chat: React.FC<ChatProps> = ({ isOpen, setIsOpen }) => {
       sendMessage() // Xabar yuborish
     }
   }
+
+  // Sahifa yangilanganda xabarlarni tozalash
+  useEffect(() => {
+    sessionStorage.setItem('messages', JSON.stringify([])) // Sahifa yangilanganda xabarlarni o'chirish
+  }, [])
 
   return (
     isOpen && (

@@ -14,6 +14,10 @@ import Wishlist from './pages/wishlist/Wishlist'
 import ViewAllProducts from './pages/ViewAllProducts/ViewAllProducts'
 import Admin from './admiin/Admin'
 import Cart from './pages/cart/Cart'
+import ProductAdmin from './admiin/products/ProductAdmin'
+import Invoices from './admiin/invoices/Invoices'
+import Customers from './admiin/customers/Customers'
+import HomeAdmin from './admiin/home/HomeAdmin'
 
 function App () {
   return (
@@ -34,6 +38,10 @@ function App () {
         <Route path='/view-all' element={<ViewAllProducts />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/product-admin' element={<ProductAdmin />} />
+        <Route path='/invoices' element={<Invoices />} />
+        <Route path='/customers' element={<Customers />} />
+        <Route path='/home-admin' element={<HomeAdmin />} />
       </Routes>
     </Router>
   )
