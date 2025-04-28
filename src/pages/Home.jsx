@@ -170,6 +170,12 @@ export default function Home () {
             >
               Sign Up
             </Link>
+            <Link
+              to='/admin'
+              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
+            >
+              Admin
+            </Link>
           </nav>
 
           <div className='flex items-center space-x-4'>

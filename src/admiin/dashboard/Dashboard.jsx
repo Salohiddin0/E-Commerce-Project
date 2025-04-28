@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import {
   AiOutlineProduct,
   AiOutlinePercentage,
@@ -51,7 +51,9 @@ const Dashboard = () => {
       {/* Sidebar */}
       <aside className='w-64 bg-white border-r border-gray-200 flex flex-col'>
         <div className='border-b border-gray-200 p-4 flex items-center justify-center'>
-          <h1 className='font-semibold text-lg'>E-Commerce-Admin-Panel</h1>
+          <Link to={'/'} className='font-semibold text-lg'>
+            E-Commerce-Admin-Panel
+          </Link>
         </div>
 
         <nav className='flex-1 overflow-y-auto p-4'>
