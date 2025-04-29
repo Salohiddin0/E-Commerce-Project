@@ -40,7 +40,7 @@ function App () {
         <Route path='/cart' element={<Cart />} />
         <Route path='/product-admin' element={<ProductAdmin />} />
         <Route path='/invoices' element={<Invoices />} />
-        <Route path='/customers' element={<Customers />} />
+        <Route path='/carousel' element={<Customers />} />
         <Route path='/home-admin' element={<HomeAdmin />} />
       </Routes>
     </Router>

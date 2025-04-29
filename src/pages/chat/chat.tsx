@@ -221,8 +221,8 @@ const Chat: React.FC<ChatProps> = ({ isOpen, setIsOpen }) => {
               value={message}
               onChange={e => setMessage(e.target.value)} // Xabarni yozish
               onKeyDown={handleKeyDownSend} // "Enter" bosilganda xabar yuborish
-              placeholder='Xabar yozing...'
-            />
+              placeholder='Xabar yozing...' 
+            />  
             <button
               onClick={sendMessage} // Xabar yuborish
               className='bg-blue-500 text-white p-3 px-7 rounded-lg hover:bg-blue-600 transition'
