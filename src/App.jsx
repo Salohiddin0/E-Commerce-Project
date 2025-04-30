@@ -16,8 +16,8 @@ import Admin from './admiin/Admin'
 import Cart from './pages/cart/Cart'
 import ProductAdmin from './admiin/products/ProductAdmin'
 import Invoices from './admiin/invoices/Invoices'
-import Customers from './admiin/customers/Customers'
-import HomeAdmin from './admiin/home/HomeAdmin'
+import Customers from './admiin/carousel/Carousel'
+import ShowAllCarousel from './admiin/carousel/components/ShowAllCarousel'
 
 function App () {
   return (
@@ -41,7 +41,7 @@ function App () {
         <Route path='/product-admin' element={<ProductAdmin />} />
         <Route path='/invoices' element={<Invoices />} />
         <Route path='/carousel' element={<Customers />} />
-        <Route path='/home-admin' element={<HomeAdmin />} />
+        <Route path='/add-carousel' element={<ShowAllCarousel />} />
       </Routes>
     </Router>
   )
