@@ -5,13 +5,13 @@ import { BiLogOut } from 'react-icons/bi'
 
 const Sidebar = ({ isDropdownOpen, toggleDropdown }) => {
   const links = [
-    { name: 'Products', href: '/product-admin', icon: AiOutlineProduct },
-    { name: 'Invoices', href: '/invoices', icon: AiOutlinePercentage },
-    { name: 'Carousel', href: '/carousel', icon: MdOutlineViewCarousel }
+    { name: 'Products', href: '/admin/product-admin', icon: AiOutlineProduct },
+    { name: 'Invoices', href: '/admin/invoices', icon: AiOutlinePercentage },
+    { name: 'Carousel', href: '/admin/carousel', icon: MdOutlineViewCarousel }
   ]
 
   return (
-    <aside className='w-64 bg-white border-r border-gray-200 flex flex-col'>
+    <aside className='w-64 h-full bg-white border-r fixed-top fixed border-gray-200 flex flex-col'>
       <div className='border-b border-gray-200 p-4 flex items-center justify-center'>
         <Link to='/' className='font-semibold text-lg'>
           E-Commerce-Admin-Panel

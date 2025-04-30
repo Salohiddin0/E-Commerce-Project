@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Sidebar from './components/Sidebar'
 import CarouselForm from './components/CarouselForm'
 import CarouselList from './components/CarouselList'
 
@@ -38,10 +37,6 @@ const Carousel = () => {
 
   return (
     <div className='flex h-screen'>
-      <Sidebar
-        isDropdownOpen={isDropdownOpen}
-        toggleDropdown={toggleDropdown}
-      />
       <div className='flex-1 p-5'>
         <CarouselForm
           title={title}
