@@ -1,46 +1,60 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeFromCart, updateQuantity } from '../../redux/slices/cartSlice'
+import Navbar from './../../components/Navbar'
 import { Link } from 'react-router-dom'
-import Navbar from '../../components/Navbar'
-import UserDropdown from '../UserDropdown/UserDropdown'
-import Footer from '../../components/Footer'
+import UserDropdown from './../UserDropdown/UserDropdown'
 
 const Cart = () => {
-  const cartItems = 2
+  const dispatch = useDispatch()
+
+  // Cart va Wishlist state'larini olish
+  const cartItems = useSelector(state => state.cart.items)
+  const wishlistItems = useSelector(state => state.wishlist.items)
+
+  const cartCount = cartItems.length
+  const wishlistCount = wishlistItems.length
+
+  // Miqdorni o‘zgartirish funksiyasi
+  const handleQuantityChange = (id, quantity) => {
+    dispatch(updateQuantity({ id, quantity: parseInt(quantity) }))
+  }
+
+  // Mahsulotni o‘chirish funksiyasi
+  const handleRemove = id => {
+    dispatch(removeFromCart(id))
+  }
+
+  // Umumiy narx (subtotal) hisoblash
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.currentPrice * item.quantity,
+    0
+  )
 
   return (
     <>
       <Navbar />
       <div className='max-w-screen-xl mx-auto'>
         <header className='flex items-center justify-between border-b py-4 px-6 relative z-20'>
-          <Link to={'/'} className='hidden md:block text-2xl font-bold'>
+          <Link to='/' className='hidden md:block text-2xl font-bold'>
             Exclusive
           </Link>
 
           <nav className='hidden md:flex space-x-8'>
-            <Link
-              to='/'
-              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
-            >
-              Home
-            </Link>
-            <Link
-              to='/contact'
-              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
-            >
-              Contact
-            </Link>
-            <Link
-              to='/about'
-              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
-            >
-              About
-            </Link>
-            <Link
-              to='/sign-up'
-              className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
-            >
-              Sign Up
-            </Link>
+            {['/', '/contact', '/about', '/sign-up', '/admin'].map(
+              (path, i) => {
+                const labels = ['Home', 'Contact', 'About', 'Sign Up', 'Admin']
+                return (
+                  <Link
+                    key={path}
+                    to={path}
+                    className='font-medium relative after:content-[""] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-black after:scale-0 after:transition-transform after:duration-200 hover:after:scale-100'
+                  >
+                    {labels[i]}
+                  </Link>
+                )
+              }
+            )}
           </nav>
 
           <div className='flex items-center space-x-4'>
@@ -67,8 +81,9 @@ const Cart = () => {
                 </svg>
               </span>
             </div>
-            <button className=''>
-              <Link to={'/wishlist'} style={{ fontSize: '20px' }}>
+
+            <button className='relative'>
+              <Link to='/wishlist'>
                 <svg
                   width='22'
                   height='20'
@@ -85,9 +100,15 @@ const Cart = () => {
                   />
                 </svg>
               </Link>
+              {wishlistCount > 0 && (
+                <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {wishlistCount}
+                </span>
+              )}
             </button>
-            <button className=''>
-              <Link to={'/cart'} style={{ fontSize: '20px' }}>
+
+            <button className='relative'>
+              <Link to='/cart'>
                 <svg
                   width='32'
                   height='32'
@@ -125,152 +146,75 @@ const Cart = () => {
                   />
                 </svg>
               </Link>
-              {cartItems > 0 && (
-                <span className='absolute top-[15px] right-[65px] bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
-                  {cartItems}
+              {cartCount > 0 && (
+                <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {cartCount}
                 </span>
               )}
             </button>
+
             <UserDropdown />
           </div>
         </header>
 
-        {/* Breadcrumb */}
-        <div className='flex gap-2 px-6 pt-[50px] md:pt-[80px] mb-[50px] md:mb-[80px] text-sm'>
-          <Link to='/' className='text-gray-500 hover:underline'>
-            Home
-          </Link>
-          <span className='text-gray-500'>/</span>
-          <p>Cart</p>
-        </div>
+        <div className='p-8'>
+          <h2 className='text-xl font-semibold mb-6'>Cart</h2>
 
-        {/* Cart Items */}
-        <div
-          style={{
-            paddingTop: '24px',
-            paddingBottom: '24px',
-            paddingLeft: '40px',
-            paddingRight: '39px',
-            borderRadius: '8px',
-            boxShadow: '0 2px 14px rgba(0, 0, 0, 0.1)'
-          }}
-        >
-          <div className='flex justify-between'>
-            <p>Product</p>
-            <p>Price</p>
-            <p>Quantity</p>
-            <p>Subtotal</p>
-          </div>
-        </div>
-
-        {/* Cart Items2 */}
-        <div
-          className='mt-[40px]'
-          style={{
-            paddingTop: '24px',
-            paddingBottom: '24px',
-            paddingLeft: '40px',
-            paddingRight: '39px',
-            borderRadius: '8px',
-            boxShadow: '0 2px 14px rgba(0, 0, 0, 0.1)'
-          }}
-        >
-          <div className='flex items-center justify-between'>
-            <p>LCD Monitor</p>
-            <p>$650</p>
-            <div className='border border-gray-300 p-2 rounded-md'>
-              <input
-                type='number'
-                defaultValue={1}
-                className='w-12 text-center appearance-none'
-                min={1}
-              />
+          {cartItems.length === 0 ? (
+            <p>Your cart is empty.</p>
+          ) : (
+            <div className='grid gap-4'>
+              {cartItems.map(item => (
+                <div
+                  key={item.id}
+                  className='flex items-center border p-4 justify-between'
+                >
+                  <div className='flex items-center gap-4'>
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className='w-20 h-20 object-contain'
+                    />
+                    <div>
+                      <h4 className='font-semibold'>{item.title}</h4>
+                      <p>${item.currentPrice}</p>
+                    </div>
+                  </div>
+                  <select
+                    value={item.quantity}
+                    onChange={e =>
+                      handleQuantityChange(item.id, e.target.value)
+                    }
+                    className='border px-2 py-1'
+                  >
+                    {[1, 2, 3, 4, 5].map(n => (
+                      <option key={n} value={n}>
+                        {n < 10 ? `0${n}` : n}
+                      </option>
+                    ))}
+                  </select>
+                  <p className='w-24 text-center'>
+                    ${item.currentPrice * item.quantity}
+                  </p>
+                  <button
+                    onClick={() => handleRemove(item.id)}
+                    className='text-red-600 text-xl'
+                  >
+                    &times;
+                  </button>
+                </div>
+              ))}
             </div>
+          )}
 
-            <p>$650</p>
-          </div>
-        </div>
-
-        <div
-          className='mt-[40px]'
-          style={{
-            paddingTop: '24px',
-            paddingBottom: '24px',
-            paddingLeft: '40px',
-            paddingRight: '39px',
-            borderRadius: '8px',
-            boxShadow: '0 2px 14px rgba(0, 0, 0, 0.1)'
-          }}
-        >
-          <div className='flex items-center justify-between'>
-            <p>LCD Monitor</p>
-            <p>$650</p>
-            <div className='border border-gray-300 p-2 rounded-md'>
-              <input
-                type='number'
-                defaultValue={1}
-                className='w-12 text-center appearance-none'
-                min={1}
-              />
+          {/* Subtotal Summary */}
+          {cartItems.length > 0 && (
+            <div className='text-right mt-6 font-semibold text-lg'>
+              Subtotal: ${subtotal.toFixed(2)}
             </div>
-
-            <p>$650</p>
-          </div>
-        </div>
-
-        {/* Cart Items center */}
-
-        <div className='flex justify-between mt-[24px]'>
-          <div className='border border-gray-500 p-4 rounded-md'>
-            <Link className='className="py-4 px-12 font-bold'>
-              Return To Shop
-            </Link>
-          </div>
-
-          <div className='border border-gray-500 p-4 rounded-md'>
-            <Link className='className="py-4 px-12 font-bold'>Update Cart</Link>
-          </div>
-        </div>
-
-        <div className='flex gap-4 mt-[80px]'>
-          <input
-            type='text'
-            placeholder='Coupon Code'
-            className='border border-gray-600 p-3 px-4 rounded-md w-72'
-          />
-          <button className='bg-red-500 text-white px-6 py-3 rounded-md font-semibold'>
-            Apply Coupon
-          </button>
-        </div>
-
-        {/* Cart bottom */}
-        <div className='mb-[80px]'>
-          <div>
-            {/* Cart Total Section */}
-            <div className='border border-gray-600 p-6 rounded-md w-full max-w-sm'>
-              <h2 className='text-xl font-bold mb-4'>Cart Total</h2>
-              <div className='flex justify-between mb-2'>
-                <span>Subtotal:</span>
-                <span>$1750</span>
-              </div>
-              <hr className='my-2' />
-              <div className='flex justify-between mb-2'>
-                <span>Shipping:</span>
-                <span>Free</span>
-              </div>
-              <hr className='my-2' />
-              <div className='flex justify-between font-semibold text-lg mb-4'>
-                <span>Total:</span>
-                <span>$1750</span>
-              </div>
-              <button className='bg-red-500 text-white w-full py-3 rounded-md font-semibold'>
-                Proceed to checkout
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
-      <Footer />
     </>
   )
 }

@@ -7,10 +7,11 @@ import {
 import Navbar from '../../components/Navbar'
 import { Link } from 'react-router-dom'
 import UserDropdown from '../UserDropdown/UserDropdown'
-import ProductCard from '../../components/product/ProductCard'
 
 const Wishlist = () => {
   const wishlistItems = useSelector(state => state.wishlist.items)
+  const cartItems = useSelector(state => state.cart.items)
+
   const dispatch = useDispatch()
 
   return (
@@ -99,7 +100,7 @@ const Wishlist = () => {
                 </span>
               )}
             </button>
-            <button className=''>
+            <button className='relative'>
               <Link to={'/cart'} style={{ fontSize: '20px' }}>
                 <svg
                   width='32'
@@ -138,6 +139,12 @@ const Wishlist = () => {
                   />
                 </svg>
               </Link>
+
+              {cartItems.length > 0 && (
+                <span className='absolute bottom-[15px] right-[-5px] bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {cartItems.length}
+                </span>
+              )}
             </button>
             <UserDropdown />
           </div>

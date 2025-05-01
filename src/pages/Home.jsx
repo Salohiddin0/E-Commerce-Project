@@ -117,6 +117,9 @@ export default function Home () {
   }
   const wishlistCount = useSelector(state => state.wishlist.items.length)
 
+  // ✅ To‘g‘rilangan: faqat bitta marta yozilgan
+  const cartItems = useSelector(state => state.cart.items)
+
   return (
     <div className='relative'>
       <Navbar />
@@ -226,7 +229,7 @@ export default function Home () {
                 </span>
               )}
             </button>
-            <button className=''>
+            <button className='relative'>
               <Link to={'/cart'} style={{ fontSize: '20px' }}>
                 <svg
                   width='32'
@@ -265,7 +268,14 @@ export default function Home () {
                   />
                 </svg>
               </Link>
+
+              {cartItems.length > 0 && (
+                <span className='absolute bottom-[15px] right-[-5px] bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {cartItems.length}
+                </span>
+              )}
             </button>
+
             <UserDropdown />
           </div>
         </header>
