@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
+import { useSelector } from 'react-redux'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -28,6 +29,12 @@ const Contact = () => {
     // Reset form after submission
     setFormData({ name: '', email: '', phone: '', message: '' })
   }
+
+  const cartItems = useSelector(state => state.cart.items)
+  const wishlistItems = useSelector(state => state.wishlist.items)
+
+  const cartCount = cartItems.length
+  const wishlistCount = wishlistItems.length
 
   return (
     <div>
@@ -90,8 +97,8 @@ const Contact = () => {
                 </svg>
               </span>
             </div>
-            <button className=''>
-              <Link to={'/wishlist'} style={{ fontSize: '20px' }}>
+            <button className='relative'>
+              <Link to='/wishlist'>
                 <svg
                   width='22'
                   height='20'
@@ -108,9 +115,15 @@ const Contact = () => {
                   />
                 </svg>
               </Link>
+              {wishlistCount > 0 && (
+                <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {wishlistCount}
+                </span>
+              )}
             </button>
-            <button className=''>
-              <Link to={'/cart'} style={{ fontSize: '20px' }}>
+
+            <button className='relative'>
+              <Link to='/cart'>
                 <svg
                   width='32'
                   height='32'
@@ -148,6 +161,11 @@ const Contact = () => {
                   />
                 </svg>
               </Link>
+              {cartCount > 0 && (
+                <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full'>
+                  {cartCount}
+                </span>
+              )}
             </button>
           </div>
         </header>

@@ -15,11 +15,11 @@ const ProductAdmin = () => {
         </div>
 
         <div className='mt-8 grid grid-cols-2 gap-6'>
-          <div className='bg-white p-6 rounded-lg shadow-lg text-center'>
+          {/* <div className='bg-white p-6 rounded-lg shadow-lg text-center'>
             <button className='border border-emerald-300 px-7 py-2 rounded-md bg-emerald-300'>
               Show Products
             </button>
-          </div>
+          </div> */}
           {/* <div className='bg-white p-6 rounded-lg shadow-lg text-center'>
             <button className='border border-emerald-300 px-7 py-2 rounded-md bg-emerald-300'>
               Add Product

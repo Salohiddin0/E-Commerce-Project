@@ -27,6 +27,9 @@ const Carousel = () => {
         link,
         color
       }
+
+      console.log("Mahsulot qo'shildi:", newItem)
+
       setCarouselItems([...carouselItems, newItem])
       setFiles([])
       setTitle('')

@@ -158,10 +158,10 @@ const Cart = () => {
         </header>
 
         <div className='p-8'>
-          <h2 className='text-xl font-semibold mb-6'>Cart</h2>
+          <h2 className='text-xl font-semibold mb-6'>Cart Items</h2>
 
           {cartItems.length === 0 ? (
-            <p>Your cart is empty.</p>
+            <p className='text-gray-600'>Your cart is empty 🛒</p>
           ) : (
             <div className='grid gap-4'>
               {cartItems.map(item => (
