@@ -17,6 +17,7 @@ import Customers from './admiin/carousel/Carousel'
 import ShowAllCarousel from './admiin/carousel/components/ShowAllCarousel'
 import AdminLayout from './layout/AdminLayout'
 import ProductAdmin from './admiin/products/ProductAdmin'
+import ProductAll from './admiin/products/components/ProductAll'
 
 function App () {
   return (
@@ -39,9 +40,10 @@ function App () {
         <Route path='/admin' element={<AdminLayout />}>
           <Route index={true} element={<Admin />} />
           <Route path='product-admin' element={<ProductAdmin />} />
+          <Route path='product-admin/add' element={<ProductAll />} />
           <Route path='invoices' element={<Invoices />} />
           <Route path='carousel' element={<Customers />} />
-          <Route path='add-carousel' element={<ShowAllCarousel />} />
+          <Route path='carousel/show' element={<ShowAllCarousel />} />
         </Route>
 
         <Route path='*' element={<NotFound />} />
